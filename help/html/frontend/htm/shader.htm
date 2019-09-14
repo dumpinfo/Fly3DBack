@@ -1,0 +1,287 @@
+<html>
+<head>
+<title>Shaders Editor: flyShader.exe</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>Shaders Editor: flyShader.exe </h1>
+<p>Fly3D SDK also offers an application for editing the shaders applied to the 
+  faces of the geometry or objects: <b>flyShader.exe</b>. This frontend can open 
+  shader files (.shr) or static and animated mesh object files (.f3d or .k3d), 
+  allowing the edition of shader effects and immediate visualization of changes 
+  in the render window. </p>
+<p>Below is a figure of the application's main window:</p>
+<p><img src="../img/shader1.gif" width="476" height="371"></p>
+<p><b>flyShader.exe</b> has several options for editing the shader effects, viewing 
+  a face or object with the shader applied, and much more. Viewing the desired 
+  shader is quite easy: just select it from the <i>shader list</i> on the leftmost 
+  side of the application window, and it will be drawn and will animate in the 
+  render window beside it.</p>
+<p>Most of the options are available through the <i>window menu</i> and the <i>Shader 
+  Properties Dialog Box</i>, which are.discussed in the sections that follow.</p>
+<h3>The Window Menu</h3>
+<p>The window menu is shown below:</p>
+<p><img src="../img/shader2.gif" width="339" height="22"></p>
+<p>The <i>Open</i> item opens a shader file (.shr) or a static or animated object 
+  file (.f3d or .k3d) for edition and visualization; the <i>Close</i> item closes 
+  the currently loaded file, be it a shader file or an object file; the <i>Save</i> 
+  item saves the currently loaded file to the disk; the <i>Properties</i> item 
+  opens the <i>Shader Properties Dialog Box</i> for the currently selected shader 
+  in the <i>shader list</i>; the <i>Background</i> item opens a color dialog box 
+  for changing the background color of the render window; the <i>Data Path</i> 
+  item changes the folder where resources should be looked for; and finally, the 
+  <i>Exit</i> item, which quits <b>flyShader.exe</b>.</p>
+<h3>The Shader Properties Dialog Box</h3>
+<p>The <i>Shader Properties Dialog Box</i> displays all the information regarding 
+  a particular shader (selected previously in the <i>shader list</i>), and allows 
+  edition of all its variables. The dialog is divided in two parts: the <i>shader 
+  properties</i> section (the topmost one), which consists of options related 
+  to the shader as a whole, and the <i>shader passes properties</i> section (the 
+  bottommost one), consisting of information about each of the shader passes separately.</p>
+<p><img src="../img/shader3.gif" width="429" height="464"></p>
+<p>In the <i>shader properties</i> section, the shader's name can be changed; 
+  the number of passes is also displayed, and there are some flag parameters available 
+  for the shader as a whole:</p>
+<ul>
+  <li><i>No Culling</i> disables backface culling of all faces where this shader 
+    is applied, forcing them to be two-sided;</li>
+  <li><i>No Depth Writing</i> disables the writing of all faces where this shader 
+    is applied to the depth buffer;</li>
+  <li><i>No Colliding</i> disables collision of objects against the faces where 
+    the selected shader is applied;</li>
+  <li><i>No Shadows</i> disables shadow casting by the faces where the shader 
+    is applied (the faces cast no shadows, but shadows of other objects are still 
+    cast on them);</li>
+  <li><i>Sky</i> is a special flag determining that the faces where the shader 
+    is applied should act as sky (the shader animates in a particular way, and 
+    objects do not explode or bounce on the face);</li>
+  <li><i>Transparent</i> enables seeing through the alpha channel of textures 
+    applied on the faces associated with the selected shader;</li>
+  <li><i>Reflectance Color</i> is the face's color; it is used by the radiosity 
+    algorithm as the color of te energy emitted and filtered by the face;</li>
+  <li><i>Transparency</i> acts as an alpha value for the whole face; setting it 
+    to a value less than 1.0 make the face transparent by this factor;</li>
+  <li><i>Self-Illumination</i> is the amount of energy emitted by the face, when 
+    radiosity is used.</li>
+</ul>
+<p>In the <i>shader passes properties</i> section, all the shader passes are displayed 
+  in the <i>shader passes list</i> to the left. It is possible to add or remove 
+  passes, and to change the order of the passes, using the four buttons above 
+  the list. And by clicking on the check boxes beside each shader pass, it is 
+  possible to enable or disable the drawing of that specific pass. This allows 
+  for better visualization of the effects applied to each pass.</p>
+<p>To the right of the <i>shader passes list</i> is an array of <i>shader effects 
+  parameters</i>, which allow the customization of each shader pass. These parameters 
+  are explained in detail below:</p>
+<ul>
+   <li><i>Depth Function </i>defines a function determining in which cases the 
+    pass will be drawn, relative to the depth buffer current configuration;</li>
+	<li><i>Color Mode</i> defines a RGB coordinates generation method, that can even 
+    be a wave-like function, in which case the function must be selected and customized 
+    by clicking on the <i>Color Function</i> button just beside the <i>Color Mode</i> combo-box 
+    (see below for the <i>Function Dialog Box</i>); </li>
+	<li><i>Blend </i>defines the blending method applied to the selected pass; the 
+    two combo-boxes represent the factor multiplied by the front color and the 
+    one multiplied by the background color, respectively;</li>
+	<li><i>Alpha Func</i> defines a function that determines in which interval the 
+    alpha channel of the pass should be considered; the combo-box represents the 
+    function and the number in the edit box is the value for comparison;</li>
+	<li><i>Light Map</i> determines if the currently selected pass represents a 
+    light map pass os a normal texture pass; if <i>Light Map</i> is unchecked, 
+    a texture can be selected for the pass with the <i>Texture</i> button, which 
+    opens a browsing dialog box for selecting the texture file;</li>
+	<li><i>Anim Map</i> adds an animation map to the selected pass. The anbimation 
+    frames can be opened in the <i>Anim Map Dialog Box </i>(see below), which 
+    is called by pressing the <i>Maps</i> button;</li>
+	<li><i>TC Mod</i> adds a Texture Coordinates Modifier effect to the selected 
+    pass, which can be a scrolling, rotating, scaling or stretching effect; the 
+    <i>Modifiers</i> button opens the <i>TC Mod Dialog Box</i>, described in a 
+    section below.</li>
+	<li><i>Environment</i> adds the environment mapping effect to the pass, since 
+    an approppriated texture is used;</li>
+	<li>if <i>Texture Clamping</i> is on, the texture is prevented from undesirable 
+    tiling, i.e. the texture is only applied in the [0..1] interval;</li>
+	<li><i>Invert Culling </i> enables inverted culling (frontface culling) on the 
+    selected shader pass;</li>
+	<li><i>Vertex Prog</i> opens a browse dialog box where a vertex program file (.vp) can be selected;</li>
+	<li><i>Vertex Prog Function</i> opens the <i>Function Dialog Box</i> (see below), where a function can be set and its  value will be evaluated every frame and passed to the program.</li>
+</ul>
+<p>The vertex programs must follow the NVidia Vertex Programs Specification document. The programs can access the video card constant registers; a list of the values stored in them is shown in the following table:</p>
+<table width="100%" border="1" cellspacing="0" cellpadding="0">
+	<tr>
+		<td width="16%">
+			<div align="center"><b>Constant register</b></div>
+		</td>
+		<td width="84%">
+			<div align="left"><b>Contents</b></div>
+		</td>
+	</tr>
+	<tr>
+		<td width="16%">
+			<div align="center">0-3</div>
+		</td>
+		<td width="84%">
+			<div align="left">Concatenated modelview and projection matrices</div>
+		</td>
+	</tr>
+	<tr>
+		<td width="16%">
+			<div align="center">4-7</div>
+		</td>
+		<td width="84%">
+			<div align="left">Modelview matrix</div>
+		</td>
+	</tr>
+	<tr>
+		<td width="16%">
+			<div align="center">8-11</div>
+		</td>
+		<td width="84%">
+			<div align="left">Inverse transpose of modelview matrix</div>
+		</td>
+	</tr>
+	<tr>
+		<td width="16%">
+			<div align="center">12-15</div>
+		</td>
+		<td width="84%">
+			<div align="left">Inverse of modelview matrix</div>
+		</td>
+	</tr>
+	<tr>
+		<td width="16%">
+			<div align="center">20</div>
+		</td>
+		<td width="84%">
+			<div align="left">(0,0.5,1,2) - general constants which can be swizzled and replicated</div>
+		</td>
+	</tr>
+	<tr>
+		<td width="16%">
+			<div align="center">21</div>
+		</td>
+		<td width="84%">
+			<div align="left">Sin/cos helper constants</div>
+		</td>
+	</tr>
+	<tr>
+		<td width="16%">
+			<div align="center">22</div>
+		</td>
+		<td width="84%">
+			<div align="left">Cos Taylor series coefficients</div>
+		</td>
+	</tr>
+	<tr>
+		<td width="16%">
+			<div align="center">23</div>
+		</td>
+		<td width="84%">
+			<div align="left">Sin Taylor series coefficients</div>
+		</td>
+	</tr>
+	<tr>
+		<td width="16%">
+			<div align="center">24</div>
+		</td>
+		<td width="84%">
+			<div align="left">Program function arguments (offset, amplitude, phase and rate)</div>
+		</td>
+	</tr>
+	<tr>
+		<td width="16%">
+			<div align="center">25</div>
+		</td>
+		<td width="84%">
+			<div align="left">Program function (f,f,f,0)</div>
+		</td>
+	</tr>
+	<tr>
+		<td width="16%">
+			<div align="center">26</div>
+		</td>
+		<td width="84%">
+			<div align="left">Time (t,t,t,0)</div>
+		</td>
+	</tr>
+	<tr>
+		<td width="16%">
+			<div align="center">30</div>
+		</td>
+		<td width="84%">
+			<div align="left">Nearest light position in eye coordinates</div>
+		</td>
+	</tr>
+	<tr>
+		<td width="16%">
+			<div align="center">31</div>
+		</td>
+		<td width="84%">
+			<div align="left">Light colour</div>
+		</td>
+	</tr>
+	<tr>
+		<td width="16%">
+			<div align="center">32</div>
+		</td>
+		<td width="84%">
+			<div align="left">Light attenuation</div>
+		</td>
+	</tr>
+	<tr>
+		<td width="16%">
+			<div align="center">33</div>
+		</td>
+		<td width="84%">
+			<div align="left"><b>L</b> light vector</div>
+		</td>
+	</tr>
+	<tr>
+		<td width="16%" height="20">
+			<div align="center">34</div>
+		</td>
+		<td width="84%" height="20">
+			<div align="left"><b>H</b> halfway vector</div>
+		</td>
+	</tr>
+	<tr>
+		<td width="16%">
+			<div align="center">35</div>
+		</td>
+		<td width="84%">
+			<div align="left">Ambient colour</div>
+		</td>
+	</tr>
+</table>
+<h3>The Function Dialog Box</h3>
+<p>The <i>Function Dialog Box</i> is a pratical way of defining a RGB generation 
+  function or a Stretch function for the <i>Texture Coordinates Modifier</i> effect. 
+  A function template can be chosen from the combo box, and the <i>Offset</i>, 
+  <i>Amplitude</i>, <i>Phase</i> and <i>Rate </i> function arguments can be set. 
+  The function applied to the interval between 0 and 1000 miliseconds can be seen 
+  in the frame beside;</p>
+<p><img src="../img/shader4.gif" width="422" height="203"></p>
+<h3>The Anim Map Dialog Box</h3>
+<p>This dialog box enables the addition of an animation map to the selected shader 
+  pass, by defining the number of frames per second on the animation, and the 
+  frames themselves, which are loaded as pictures.</p>
+<p><img src="../img/shader5.gif" width="212" height="261"></p>
+<p>The <i>FPS</i> edit box represents the number of frames per second of the animation; 
+  the <i>Add</i>, <i>Remove</i>, <i>Up</i> and <i>Down</i> buttons manipulate 
+  the frames of the animation, forming the animation map.</p>
+<h3>The TC Mod Dialog Box</h3>
+<p>This dialog box allows the configuration of the Texture Coordinates Modifier 
+  effect, which applies on the currently selected shader pass. This effect can 
+  include scaling, rotating, scrolling or stretching the texture coordinates.</p>
+<p><img src="../img/shader6.gif" width="369" height="178"></p>
+<p>If <i>Scale</i> is enabled, the amount of scaling in the <i>U</i> and <i>V</i> 
+  directions must be informed in the respective edit boxes; the same occurs for 
+  the <i>Scroll</i> modifier; upon enabling <i>Rotation</i>, the rotation factor 
+  must be defined in the edit box, representing the amount of cyclic rotation 
+  applied; the <i>Stretch</i> modifier works with a stretch function; clicking 
+  on the <i>Function</i> button brings up the <i>Function Dialog Box</i>, already 
+  described above.</p>
+</body>
+</html>

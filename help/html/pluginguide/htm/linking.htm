@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>Linking a standard plugin to a new plugin or application</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>Linking a standard plugin to a new plugin or application</h1>
+<p>Fly3D Engine was designed in a way to make it as easiest as possible to extend 
+  its functionalities. Pratically speaking, this was achieved by making the engine 
+  fully plugin-oriented. A Fly3D plugin is built as a DLL and is linked to the 
+  engine. It must implement some DLL-exported functions that allow the engine 
+  to know what classes it implements. Pugin-building is explained in the <a href="../../guide/htm/plugins.htm">Plugins 
+  section of Fly3D Engine Guide</a>.</p>
+<p>When developing a new plugin or application, it may be desired to use a class 
+  that is included in one of the standard plugins featured in the engine. For 
+  example: one certain class in the new plugin implements an object that carries 
+  a light spot. The light iteself does not need to be implemented, since the <b>lights.dll</b> 
+  plugin already has a class that implements a dynamic light. The new plugin just 
+  needs to be connected with the existing standard plugin, and the given class 
+  can add a member variable that is an instance of the <b>light</b> class.</p>
+<p>The first step is to include the standard plugin's header file (.h) that contains 
+  the desired class in the new plugin or application's .h file. Some plugins, 
+  like <b>lights.dll</b> and <b>viewport.dll</b>, implement one or a few classes, 
+  and therefore have a single .h file; others, like <b>gamelib.dll</b>, implement 
+  several classes, each of them in a separate .h file. Anyway, the desired class' 
+  .h file must be recognized and included in the new plugin or application's .h 
+  file.</p>
+<p>An important note must be added here about <b>object types</b>: Fly3D needs 
+  that an integer value is assigned to each class that will be present in the 
+  simulation, representing the <b>type</b> of any object that is an instance of 
+  the class. This is necessary for the engine to distinguish each object from 
+  others that are not like it, and to group objects of the same type so that the 
+  access to them in sequence is optimized. This charateristic brings up an important 
+  consequence: two different classes cannot have the same integer value for the 
+  type, or its objects would be mixed together and treated as if they were of 
+  the same class. Therefore, special care must be taken not to assign the same 
+  type number to two different classes that will have instances present in the 
+  simulation at the same time. All the standard plugins enumerate, on top of their 
+  main header file, the types that they use for their classes, and all other plugins 
+  should do the same, making it almost instantaneous to recognize the values used 
+  by that plugin.</p>
+<p>Calling a method from a class that is inside another plugin DLL brings another 
+  important note: if the method is a virtual one, the new plugin (that calls it) 
+  should compile and link fine; however, if it is not virtual, the Library file 
+  (.lib) of the plugin containing the class whose method is called must be added 
+  to the caller plugin's project, or it will not link.</p>
+</body>
+</html>

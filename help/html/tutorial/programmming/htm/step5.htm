@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>Programming Tutorial - Step 5</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>5. Processing the engine's global messages</h1>
+<p>Among many global methods created by the Plugin Wizard in the tutorial's <font face="Courier" size="-1">.cpp</font> 
+  file, one deserves special attention: the <b>fly_message</b> function. This 
+  function is used by the engine to notify the plugins of events like scene initialisation, 
+  between-frames update time, draw time, scene closing, etc. Any plugin that wishes 
+  to respond to these events must implement the response in this function.</p>
+<p>During the simulation, Fly3D engine sends the <b>FLY_MESSAGE_UPDATESCENE</b> 
+  and <b>FLY_MESSAGE_DRAWSCENE</b> messages to the plugins whenever it is time 
+  to update the state or to draw between frames. Tipically, one of the plugins 
+  must receive and respond to the <b>FLY_MESSAGE_DRAWSCENE</b> message, drawing 
+  a view of the simulation from some point, or nothing will be drawn (or seen).</p>
+<p>In this tutorial example, the <b>FLY_MESSAGE_INITSCENE</b> message does not 
+  need to be implemented, as the plugin has nothing to do upon scene initialisation; 
+  the same occurs with the <b>FLY_MESSAGE_UPDATESCENE, FLY_MESSAGE_DRAWTEXT</b> 
+  and <b>FLY_MESSAGE_CLOSESCENE </b>messages. The only message that must be implemented 
+  by the plugin is the <b>FLY_MESSAGE_DRAWSCENE</b> message, where it must set 
+  the engine's camera to the desired camera object, and tell the engine to draw 
+  the scene from that camera. The code for the <b>fly_message </b>function that 
+  implements this is as follows:</p>
+<p class="code">__declspec( dllexport )<br>
+  int fly_message(int msg,int param,void *data)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;switch(msg)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case FLY_MESSAGE_INITSCENE:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case FLY_MESSAGE_UPDATESCENE:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case FLY_MESSAGE_DRAWSCENE:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g_flyengine-&gt;set_camera(g_flyengine-&gt;cam);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g_flyengine-&gt;draw_bsp();<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case FLY_MESSAGE_DRAWTEXT:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case FLY_MESSAGE_CLOSESCENE:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;return 1;<br>
+  }</p>
+</body>
+</html>

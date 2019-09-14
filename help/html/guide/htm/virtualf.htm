@@ -1,0 +1,82 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Fly3D Guide - flyBspObject virtual functions</TITLE>
+<META NAME="Template" CONTENT="D:\ARQUIVOS DE PROGRAMAS\MICROSOFT\OFFICE\html.dot">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</HEAD>
+<BODY TEXT="#000000" LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff">
+
+<H1>flyBspObject virtual functions</H1>
+<P>Every object that exists in the BSP must derive from the <B>flyBspObject</B> class. This way, it inherits the <B>flyParticle</B>, <B>flyLocalSystem</B> and <B>flyBaseObject</B> properties, all of which are <B>flyBspObject </B>parent classes. Also, the object inherits all the <B>flyBspObject</B> methods, having to implement a default constructor and a copy-constructor, and re-implement some vitual functions that allow the object to update its state, draw itself whenever required, and much more. Below is a list of these functions and a description of what they should implement:</P>
+<h3>default constructor</h3>
+<P class="code">my_class():<BR>
+  var1(0),<BR>
+  var2(0),...</P>
+<P>The default constructor must assign initial values to the class' member variables. In the example above, the 0's must be replaced by the initial value of each variable. This constructor is necessary to assure that a recently instantiated object does not contain invalid data that could cause a crash in the system.</P>
+<h3>copy-constructor</h3>
+<P class="code">my_class(const my_class &amp;in):<BR>
+  flyBspObject(in),<BR>
+  var1(in.var1),<BR>
+  var2(in.var2),...</P>
+<P>The copy-constructor must copy all the member variable values from the given 
+  source object. Also, it must call the copy-constructor of all the parent classes 
+  (in the example above, the <B>flyBspObject</B> class). Note that we must not 
+  copy pointers from the source object; instead, we should allocate additional 
+  memory for new pointers, and copy the data from the source's pointers.</P>
+<h3>init</h3>
+<P class="code">void init()</P>
+<P>Unlike the constructor, this function is called whenever the object is activated in the simulation (for more information on activating objects, see the <A HREF="objects.htm">stock and active objects</A> section). It should implement the initialisation and validation of all the object's attributes, and any other measure that should be taken upon inserting an object in the simulation.</P>
+<h3>step</h3>
+<P class="code">int step(int dt)</P>
+<P>For all <A HREF="objects.htm">active objects</A>, this function is called by 
+  the engine once per frame. It must implement whatever your object needs to do 
+  to update its state every frame. For example, an object that represents the 
+  player should check for input; one that moves around should update its position 
+  and velocity; and so on.</P>
+<h3>draw</h3>
+<P class="code">void draw()</P>
+<P>This function is called by the engine to require that the object draws itself. 
+  If we wants its object to show up whenever a camera is facing it, we should 
+  implement drawing with OpenGL in this function. It is important to observe that, 
+  unlike the <B>step</B> function, the <B>draw</B> function might be called more 
+  than once in the same frame, in the case that two different viewports or cameras 
+  are seeing the object. Therefore, we should not implement any state update in 
+  the <B>draw</B> function, leaving it in the <B>step</B> function, or that piece 
+  of code could run twice in a frame.</P>
+<h3>draw_shadow</h3>
+<P class="code">void draw_shadow()</P>
+<P>This function is called by the engine to require that the object draws its shadow. Like the <B>draw</B> function, it can eventually be called more than once per frame, in the case where two or more viewports are seeing the shadow. The <B>draw_shadow</B> function can use the <B>draw_shadow_volume</B> function of the object's mesh instance (a <B>flyMesh</B> object).</P>
+<h3>get_mesh</h3>
+<P class="code">flyMesh *get_mesh()</P>
+<P>This function must return a pointer to the object's mesh instance, if any. It is called by the engine whenever it needs information on the mesh's structure. </P>
+<h3>clone</h3>
+<P class="code">flyBspObject *clone()<BR>
+  { return new my_class(*this); } </P>
+<P>This function is called by the engine whenever it needs to make a copy of the object. It should be implemented exactly like the example above, calling the copy-constructor of the object and returning the newly allocated pointer.</P>
+<h3>message</h3>
+<P class="code">int message(const flyVector&amp; p,float rad,int msg,int param,void 
+  *data)</P>
+<P>This function is used for communication between objects in the simulation. 
+  Our object should implement it to be able to receive messages about events that 
+  occurred in the simulation. The engine can also send a message to an object 
+  via this function. An example of the use of <B>message</B> is dynamic lighting: 
+  the lights send a message to all the nearby objects; if an object wants to be 
+  lit, it must implement the <B>message</B> function and receive the <B>FLY_OBJMESSAGE_ILLUM</B> 
+  message.</P>
+<h3>get_custom_param_desc</h3>
+<P class="code">int get_custom_param_desc(int i,flyParamDesc *pd)</P>
+<P>This function is used by parameter-editing applications (like <B>flyEditor</B>). It should fill a parameter description object (an instance of the <B>flyParamDesc</B> class) for each user-editable parameter in the object. The function must do so by switching the <B>i </B>parameter value, and must always return the total number of editable parameters in the object (many examples of the implementation of <B>get_custom_param_desc</B> are given in the plugins available together with the engine).</P>
+<h3>ray_intersect</h3>
+<P class="code">flyMesh *ray_intersect(const flyVector&amp; ro,const flyVector&amp; 
+  rd,flyVector&amp; ip,float&amp; dist,int &amp;facenum)</P>
+<P>This function should implement ray-intersection against the object. We may 
+  want to make the intersection with the object's mesh, or maybe just with its 
+  bounding box. This function must compute the intersection point and face, and 
+  return the intersected mesh (a pointer to a <B>flyMesh</B> object).</P>
+<h3>ray_intersect_test</h3>
+<p class="code">int ray_intersect_test(const flyVector&amp; ro,const flyVector&amp; 
+  rd,float dist)</p>
+<P>This function resembles the last one, but it is actually just a test for intersection; it should be quicker than <B>ray_intersect</B>, just testing if any intersection occurs and returning true or false, not computing intersection point or face.</P></BODY>
+</HTML>

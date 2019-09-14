@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>How does it sound? Using the 'sound' class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>How does it sound? Using the 'sound' class </h1>
+<p>Sound plays a major role in adding depth and feeling to a simulation. Below 
+  are described the different methods of using the <b>sound</b> class provided 
+  in the Fly3D standard plugin called <b>gamelib.dll</b>.</p>
+<p>First of all, a pointer to a <b>sound</b> object must be added to the class 
+  definition. It will point to a stock object that must be cloned and activated 
+  when the sound is to be played. An example in a simple class is below: </p>
+<p class='code'>#include &quot;c:\fly3d\plugin\gamelib\sound.h&quot;<br>
+  <br>
+  class myclass : public flyBspObject<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;sound *s;<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;myclass();<br>
+  };</p>
+<p>Playing the sound is as simple as a single function call: the <b>add_sound_clone</b> 
+  method provided by the <b>sound</b> class makes a copy of the original sound 
+  object and activates it, telling it to play immediately. The active sound object 
+  lives for the duration of the sound file (if not set to loop) or until some 
+  object deletes it (if set to loop). The <b>add_sound_clone</b> methods receives 
+  two pointers to floats as parameters: the first pointer must contain 3 floats 
+  representing the initial position of the sound; the second must contain other 
+  3 floats representing the velocity with which the sound will move. If both pointers 
+  are set to 0, then the sound plays in 2D; if position is valid and velocity 
+  is 0, the sound plays in 3D but does not move; if both pointers are valid, the 
+  sound plays in 3D starting from the given position and moving with the given 
+  velocity. Below are examples of these 3 ways of calling the method: </p>
+<p class='code'>s-&gt;add_sound_clone(0,0); //Play the sound in 2D<br>
+  <br>
+  s-&gt;add_sound_clone(&amp;pos.x,0); //Play the sound on the object's position<br>
+  <br>
+  s-&gt;add_sound_clone(&amp;pos.x,&amp;vel.x); //Play the sound from the object's 
+  position, moving with the object's velocity</p>
+<p>The third way of calling the <b>add_sound_clone</b> function obligates the 
+  sound to automatically reccalculate its position every frame until it finishes 
+  playing or is deleted. Therefore, the second pointer (the one representing velocity) 
+  must remain valid until the sound dies, for it will access it every frame.</p>
+<p>Finally, if the object containing the sound has constant velocity, it can carry 
+  the sound along when moving. Simply set the sound to loop and call the <b>add_sound_clone</b> 
+  function passing the object's current position and velocity as parameters, and 
+  the sound will move exactly like the object. The only remark is that the object 
+  must delete the sound before dying.</p>
+</body>
+</html>

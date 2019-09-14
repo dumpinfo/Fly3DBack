@@ -1,0 +1,154 @@
+<html>
+<head>
+<title>Programming Tutorial - Step 10</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>10. Adding a new class to the plugin: light </h1>
+<p>In this step, a new class will be added to the tutorial plugin. And since the 
+  next step is about adding lighting to the simulation, the new class will be 
+  a light source.</p>
+<p>Firstly, a new type must be added to the enumerated at the top of the <font face="Courier" size="-1">.h</font> 
+  file. It will be called <b>TYPE_LIGHT</b>. Every class in the plugin must have 
+  a corresponding type. The enumerated should now look like this: </p>
+<p class="code">enum<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;TYPE_OBJECT=100000,<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;TYPE_CAMERA,<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;TYPE_LIGHT,<br>
+  };</p>
+<p>Now for the definition of the <b>light </b>class. Like all other classes that 
+  exist in the scene, it must derive from the <b>flyBspObject</b> class. The <b>light 
+  </b>class will have two member variables, <font face="Courier" size="-1">color</font> 
+  and <font face="Courier" size="-1">illumradius</font>, representing the color 
+  and the light radius of the light, respectively. Also, a constructor and a copy-constructor 
+  must be created. The constructor must assign initial values to the member variables 
+  and set the <font face="Courier" size="-1">type</font> variable (inherited from 
+  <b>flyBspObject</b>) to the constant defined before; the copy-constructor must 
+  call <b>flyBspObject</b>'s copy-constructor, and assign the member variables 
+  to the values given by the source object that is being copied. All the <b>flyBspObject</b> 
+  pure virtual functions must also be implemented, and the entire definition of 
+  the <b>light</b> class should look like this:</p>
+<p class="code">class light : public flyBspObject<br>
+  {<br>
+  public:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;flyVector color;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;float illumradius;<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;light() :<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color(1),<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;illumradius(100)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;{ type=TYPE_LIGHT; }<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;light(const light&amp; in) :<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flyBspObject(in),<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color(in.color),<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;illumradius(in.illumradius)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;{ }<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;virtual ~light()<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;{ }<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;void init();<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;int step(int dt);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;void draw();<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;int get_custom_param_desc(int i,flyParamDesc *pd);<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;flyBspObject *clone() <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;{ return new light(*this); }<br>
+  }; </p>
+<p>Another important step is to create a description class for the new <b>light</b> 
+  class. Description classes allow external modules to see what classes exist 
+  in the plugin and what members they export. All description classes are very 
+  alike, so the <b>light</b>'s description class will be similar to the <b>camera</b>'s 
+  or the <b>object</b>'s:</p>
+<p class="code">class light_desc : public flyClassDesc<br>
+  {<br>
+  public:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;flyBspObject *create() { return new light; };<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;const char *get_name() { return &quot;light&quot;; };<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;int get_type() { return TYPE_LIGHT; };<br>
+  };</p>
+<p>In the above class, the <font face="Courier" size="-1">create</font> method 
+  must return a new instance of the described class; the <font face="Courier" size="-1">get_name</font> 
+  method must return a string containing the friendly name of the class; and the 
+  <font size="-1"> <font face="Courier"> get_type</font></font> method must return 
+  the type that defines that class.</p>
+<p>Now that the description class is created, the plugin's exported methods must 
+  be modified to include the new <b>light</b> class. Two methods must be modified: 
+  the <font face="Courier" size="-1">num_classes</font> method, which must return 
+  the total number of classes in the plugin, and the <font face="Courier" size="-1">get_class_desc</font>, 
+  which must return a pointer to a description class for each class in the plugin. 
+  They should look like this:</p>
+<p class="code">__declspec( dllexport )<br>
+  int num_classes()<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;return 3;<br>
+  }<br>
+  <br>
+  __declspec( dllexport )<br>
+  flyClassDesc *get_class_desc(int i)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;switch(i)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 0:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 
+  &amp;cd_object;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 1:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 
+  &amp;cd_camera;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 2:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return 
+  &amp;cd_light;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;return 0;<br>
+  }</p>
+<p>Finally, the <b>light</b> class methods must be implemented. They are quite 
+  simple: the <b>init </b>method must create an axis-aligned bounding box for 
+  the light; the <b>step</b> and <b>draw</b> methods will do nothing (for now); 
+  the <b>get_custom_param_desc</b> method must enumerate the two member variables 
+  in the class. They should be implemented this way:</p>
+<p class="code">void light::init()<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;bbox.max.vec(-10,-10,-10);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;bbox.min.vec(10,10,10);<br>
+  }<br>
+  <br>
+  int light::step(int dt)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;return 0;<br>
+  }<br>
+  <br>
+  void light::draw()<br>
+  {<br>
+  <br>
+  }<br>
+  <br>
+  int light::get_custom_param_desc(int i,flyParamDesc *pd)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;if (pd!=0)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch(i)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 
+  0:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;type='c';<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;data=&amp;color;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;name=&quot;color&quot;;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 
+  1:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;type='f';<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;data=&amp;illumradius;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;name=&quot;illumradius&quot;;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;return 2;<br>
+  }</p>
+<p>The next step is about adding lighting and shadows to the simulation, and will 
+  use the newly created <b>light</b> class to represent light sources.</p>
+</body>
+</html>

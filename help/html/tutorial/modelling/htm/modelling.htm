@@ -1,0 +1,302 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Modelling, exporting and building a more complex level</title>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+<meta content="MSHTML 6.00.2600.0" name=GENERATOR>
+<link rel="stylesheet" href="../../../fly-refes.css" type="text/css">
+</head>
+<body text=#000000 bgcolor=#ffffff>
+<h1>Modelling, exporting and building a more complex level</h1>
+<p>This tutorial explains how to model and illuminate a complex level, build the 
+  structure, build detail objects, build curves, texturize and export it to be 
+  used as a Fly3D scene environment. 3D Studio MAX 3.x or 4.x can be used as modelling 
+  tools. The user must have basic knowledge of this software. Fly3D export/import 
+  plugins and curve plugin for the corresponding MAX version must be installed 
+  through the <b>flyInstPlugins.exe</b> application. </p>
+<h3>The Concept of a New Level</h3>
+<p>- The very first step when building a new level is to design structures and 
+  details as in an architectural project, where decisions about measurements, 
+  type of materials used, textures, etc. must be made.</p>
+<p>- The following drawings are conceptual sketches of this tutorial's example 
+  level and detail objects, made before the construction of the environment:</p>
+<p><img src="../img/croqui.jpg" width="200" height="300">&nbsp;&nbsp;&nbsp;&nbsp;<img src="../img/croqui2.jpg" width="238" height="265"></p>
+<p><img src="../img/blueprint.jpg" width="300" height="335">&nbsp;&nbsp;&nbsp;&nbsp;<img src="../img/pilar.jpg" width="217" height="273"></p>
+<h3>Building the Level's Structural Faces </h3>
+<p>- Structural faces are the ones that define the geometry of the scene, dividing 
+  the space between &quot;in&quot; and &quot;out&quot; of the environment, like 
+  walls, ceilings, floors, etc.</p>
+<p>- It is of great importance that some properties are maintained by the structural 
+  model, specially when modelling more complex environments: the whole set of 
+  structural faces must define a closed concave volume. This is achieved by having 
+  two and only two faces sharing a given edge, for all edges that compound the 
+  model. If these properties are kept, the BSP building routine will generate 
+  only positive (valid) leaf nodes, making it possible to use PVS culling and 
+  portals technology for path-finding.</p>
+<p>- The structure of the scene in this tutorial was built in 3D Studio MAX, where 
+  it is important to assure that the <i>Snap to Grid</i> option is turned on. 
+  A level's structure can also be built using AutoCAD, and then exported as a 
+  .3ds file to be imported in MAX.</p>
+<p><img src="../img/struct1.jpg" width="300" height="201" align="top"><img src="../img/struct3.jpg" width="300" height="201" align="top"></p>
+<p>- It is necessary to invert these faces' normals so that they are turned to 
+  inside the level, like in the figure below:</p>
+<p><img src="../img/struct2.jpg" width="300" height="201"></p>
+<p>- The next step is to texturize the structural faces using UVW mapping. The 
+  <i>Planar</i>, <i>Box</i> or<i> Cylindrical</i> mapping templates can be used, 
+  as well as <i>Face Map</i></p>
+<p>- To make the task of mapping the structural faces easier, the <i>Detach</i> 
+  procedure can be used to separate the faces, making it possible to map each 
+  face in a unique way.</p>
+<p>- The next step is setting the created mesh as <i>structural</i>. Fly3D uses 
+  a <i>prefix tag system</i> for recognizing the various types of meshes and faces. 
+  To set the mesh's faces as <i>structural faces</i>, just rename it, placing 
+  a "*" (asterisk) character before its name. For example, a mesh named "structure" 
+  must be renamed to &quot;*structure". </p>
+<h3>Adding detail objects</h3>
+<p>- In this step, <i>detail objects</i> will be added to the scene, making it 
+  more realistic. Typical detail objects are picture frames, pilars, tables, boxes, 
+  stairs etc. The images below shows pilars and stairs added to the original scene:</p>
+<p><img src="../img/detail1.jpg" width="250" height="167"><img src="../img/detail2.jpg" width="250" height="167"></p>
+<p>- <i>Detail objects</i> follow the same <i>prefix tag</i> pattern. Therefore, 
+  a "^" must be added to the beginning of the object's name, if the object is 
+  made of triangular faces, or a "&amp;", if the object is made of faces with 
+  more than three vertices.</p>
+<p>- The following figures show examples of a triangular detail object (on the 
+  left) and a polygonal detail object (on the right):</p>
+<p><img src="../img/detail3.jpg" width="250" height="167"><img src="../img/detail4.jpg" width="250" height="167" align="top"></p>
+<p>- Special care must be taken when adding detail objects to the level. Their 
+  volumes must be located all inside the concave volume defined by the structural 
+  model. However, detail faces do not have the same limitations of structural 
+  ones: edges and vertices can be shared by any number of faces in any fashion.</p>
+<p>- It is also important to note that detail objects made of large faces (faces 
+  with more than three vertices) will have lighmaps applied to them for static 
+  (pre-calculated) illumination, while objects made of triangular faces will be 
+  illuminated with vertex lights technology.</p>
+<h3>Adding lights</h3>
+<p>- In this step, lights will be added to the scene. Lights must always be of 
+  the <i>Omni</i> type, and its color and illumination radius must be defined 
+  in the <i>far attenuation</i> submenu. Lights do not need a <i>prefix tag</i> 
+  before their names.</p>
+<p>- In the lights <i>Far Attenuation</i> submenu, the default lighting radius 
+  are set: <i>Start=80</i> and <i>End=500.</i></p>
+<p><img src="../img/light1.jpg" width="300" height="225"><img src="../img/light2.jpg" width="300" height="225"><br>
+  <img src="../img/light3.jpg" width="300" height="201"></p>
+<p>- Lighting is a major feature that adds ambience and depth to a level. It is 
+  probable that the level designer will want to test several light configurations 
+  before the intended visual impressions are achieved.</p>
+<h3>Adding Entities</h3>
+<p>- The last step in building the level is inserting <i>entities</i> in it. <i>Entities</i> 
+  can be power-ups, birthpads, portals, mirrors, etc. In this tutorial example, 
+  birthpad and power-up entities were added to the scene. The entities names must 
+  match the names of classes that exist in a Fly3D plugin, and they are represented 
+  by simple meshes, like boxes.</p>
+<p>- Entities must have a "$" <i>prefix tag</i> before their names.</p>
+<p>- There exists pre-defined entities for game templates like the <i>Walk</i> 
+  and <i>Ship</i> games, like power-ups for each of the games.</p>
+<p>- What follows is a list of entities already defined in the <i>Walk</i> and 
+  <i>Ship</i> games.</p>
+<table width="75%" border="0" cellpadding="2" cellspacing="0">
+  <tr> 
+    <td align="center" class="bold">SHIP</td>
+    <td align="center" class="bold">WALK</td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_birthpad
+    </td>
+    <td>
+      <p>$item_health_small
+    </td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_shield_small
+    </td>
+    <td>
+      <p>$item_health 
+    </td>
+  </tr>
+  <tr> 
+    <td>
+      <p> $ship_shield_medium
+    </td>
+    <td>
+      <p>$item_health_large
+    </td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_shield_large
+    </td>
+    <td>
+      <p>$item_health_mega
+    </td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_cloak
+    </td>
+    <td>
+      <p>$ammo_bullets
+    </td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_powershield
+    </td>
+    <td>
+      <p>$ammo_shells
+    </td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_powerdamage
+    </td>
+    <td>
+      <p>$ammo_rockets
+    </td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_pulsar
+    </td>
+    <td>
+      <p>$ammo_slugs
+    </td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_laser
+    </td>
+    <td>
+      <p>$weapon_shotgun
+    </td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_bumper
+    </td>
+    <td>
+      <p>$weapon_rocketlauncher
+    </td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_railgun
+    </td>
+    <td>
+      <p>$weapon_railgun
+    </td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_plasma
+    </td>
+    <td>
+      <p>$item_quad
+    </td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_fusion
+    </td>
+    <td>
+      <p>$item_invis
+    </td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_mine 
+    </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_turretmine 
+    </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_concussion 
+    </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_velos
+    </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_homing
+    </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_guided 
+    </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_disruptor
+    </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_gravtor
+    </td>
+    <td>&nbsp;</td>
+  </tr>
+  <tr> 
+    <td>
+      <p>$ship_atom
+    </td>
+    <td>&nbsp;</td>
+  </tr>
+</table>
+<h3>
+  Exporting the level</h3>
+<p>- In this step, it is mandatory that the export plugins have been installed 
+  through <b>flyInstPlugins.exe</b>. Refer to the Programming Tutorial, Step 2 
+  for information on how to use <b>flyInstPlugins.exe</b>.</p>
+<p>- In the 3D Studio MAX menu, select File/Export. Then choose "Fly3D 2.0 Map 
+  (*.fmp)" from the file type list. The file must be saved in the 'data' folder 
+  inside Fly3D installation directory.</p>
+<p>- Make sure that the proper <i>prefix tags </i>are added to the names of entities 
+  and meshes, or the export module will not recognize them.</p>
+<h3>Building the level</h3>
+<p>- Now that the map file (.fmp) is saved, the scene must be built for Fly3D 
+  frontends to be able to open and run it. In the 'util' folder inside Fly3D installation 
+  directory, the <b>flyBuilder.exe</b> application must be run.</p>
+<p>- The previously exported .fmp file must be selected. The build options can 
+  be changed, but for this example the default settings will do. A <i>class template</i> 
+  must also be chosen, and for this tutorial the <b>fly_observer</b> template 
+  will be used.</p>
+<p>- The build options used in this example are shown below:<br>
+</p>
+<p> Build BSP<br>
+  Compute visibility<br>
+  Build Lightmaps<br>
+  Build FLY file<br>
+  Class Template: Observer</p>
+<p><i>Options:</i><br>
+  Backface Culling<br>
+  Light x Normal Dot product<br>
+  Shadows Soft Shadows<br>
+  Light Samples : 4<br>
+  Light Jittering : 4.0000<br>
+  Ambient Light: 20<br>
+  Light Map size: 64<br>
+  Light Map pixel size: 32.0000<br>
+  BSP Grid size: 50000.0000<br>
+  PVS Grid size: 50000.0000
+</p>
+<p>- The texture files applied to the scene's materials must be copied into a 
+  directory with the scene name (same name as the .fmp file) inside the 'data' 
+  folder in Fly3D installation directory.</p>
+<p>- After clicking on the <i>Build</i> button and waiting a little while, the 
+  scene will be ready for use in Fly3D.</p>
+</body></html>

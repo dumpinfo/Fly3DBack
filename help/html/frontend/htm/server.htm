@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>Multiplayer Server: flyServer.exe</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>Multiplayer Server: flyServer.exe </h1>
+<p>Fly3D Engine implements multiplayer gaming in a client/server architecture, 
+  using DirectPlay as a low-level messaging module. The engine provides a specific 
+  application for creating a multiplayer games server in the local machine: <b>flyServer.exe</b>. 
+  It is a simple command line program, which receives a .fly file name as a parameter, 
+  and creates a multiplayer server running the scene defined by the specified 
+  .fly file. The application's functionalities include listening for clients who 
+  want to join the game, receiving multiplayer game messages, synchronizing the 
+  game and re-sending acknowledgement messages and game state messages to the 
+  clients, besides logging any in-game special events and maintaining coherence 
+  among the clients' games.</p>
+<p><b>flyServer.exe</b> usage is as simple as shown below:</p>
+<p class="code">flyServer.exe flyfile gamename</p>
+<p>In this example, <i>flyfile</i> should be replaced by the complete or relative 
+  path and name of the .fly file containing the scene that will run on the server 
+  and clients as well; <i>gamename</i> is simply a string naming the game created, 
+  for other players to recognize it.</p>
+</body>
+</html>

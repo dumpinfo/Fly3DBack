@@ -1,0 +1,157 @@
+<html>
+<head>
+<title>Parameter Editor: flyEditor.exe</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>Parameter Editor: flyEditor.exe </h1>
+<p>As a software development kit, Fly3D 2.0 offers frontends and utilities that 
+  work as development tools to facilitate content creation and integration of 
+  the art material with the game or application executables. <b>flyEditor.exe</b> 
+  is one of the most important and useful tools of these. It can create a new 
+  .fly file or open an existing one, and serves for editing global or engine variables, 
+  loading plugins, creating objects, activating them, editing parameters in any 
+  object, be it active or not, and much more. <b>flyEditor.exe</b> also features 
+  a rendering window where the simulation of the currently open .fly file is executed 
+  and viewed, making it possible to modify parameters and see the results on-the-fly.</p>
+<p><b>flyEditor.exe</b> has a window menu with various options, and its window 
+  is divided in three parts: the <i>tree view</i>, the <i>list view</i> and the 
+  <i>render view</i>. All these items are discussed in the following sessions:</p>
+<h3>The Window Menu</h3>
+<p><b>flyEditor.exe</b> features a complete window menu, with useful options like 
+  creating or loading a .fly file, copying and pasting of objects and parameter 
+  values, simulation options, and much more. Most commands, specially in the <i>Edit</i> 
+  submenu, are also available by right-clicking the desired object.</p>
+<p><img src="../img/editor1.gif" width="238" height="222"></p>
+<p>The <i>File</i> submenu has several items: <i>New</i> creates a new .fly file 
+  from scratch; <i>Open</i> opens a previously created .fly file; <i>Save</i> 
+  and <i>Save As </i>save the currently loaded file; <i>Revert to Saved</i> throws 
+  away all modifications made to the currently loaded .fly file and re-opens the 
+  previously saved version of the file; <i>Restart</i> restarts the simulation; 
+  <i>Save Fly3D.ini</i> saves the initialization variable values on the 'Fly3D.ini' 
+  file; a <i>list of recently loaded .fly files</i> for quick opening; and the 
+  <i>Exit</i> option, which closes the application.</p>
+<p><img src="../img/editor2.gif" width="141" height="159"></p>
+<p>The <i>Edit</i> submenu includes menu items for dealing with objects, like 
+  the <i>Cut</i>, <i>Copy</i> and <i>Paste</i> commands; the <i>Duplicate</i> 
+  item makes a copy of the currently selected object in the tree view, and pastes 
+  it in the same hierarchical position of the original object; <i>Insert</i> can 
+  be used in two ways: to insert a new plugin, .f3d object or texture (if any 
+  of these three tree view root items is selected) or to create a new instance 
+  of a class (if a class inside a plugin is selected instead); <i>Delete/Clear</i> 
+  can be used to delete all instances of the selected class or to remove the selected 
+  plugin from the scene; <i>Rename</i> can be used to rename any class instance 
+  in the simulation.</p>
+<p><img src="../img/editor3.gif" width="122" height="102"></p>
+<p>The <i>View</i> submenu has 4 options related to viewing and rendering: <i>Object 
+  Only</i> focuses the camera on the selected object and draws it as seen in the 
+  simulation; <i>Simulate</i> turns the simulation on/off; <i>Toolbar</i> and 
+  <i>Status Bar</i> toggle the respective controls on/off.</p>
+<p><img src="../img/editor4.gif" width="127" height="41"></p>
+<p>And finally, the <i>Help</i> submenu has only one item: <i>About flyEditor</i>, 
+  which displays information concerning the development of the application and 
+  copyright issues.</p>
+<h3>The Toolbar Menu</h3>
+<p>Right below the window menu is a toolbar with useful buttons for quick access 
+  to some functions of <b>flyEditor.exe</b>. Most of them are also accessible 
+  through the window menu.</p>
+<p><img src="../img/editor8.gif" width="382" height="25"></p>
+<p>The complete list of buttons and the action each of them perform, in the correspponding 
+  order that they are placed in the toolbar, from left to right, can be found 
+  below: </p>
+<ul>
+  <li>the <i>New</i>, <i>Open</i> and <i>Save</i> buttons correspond to the options 
+    with the same name found in the <i>File</i> submenu of the window menu;</li>
+  <li><i>SR</i> (<i>Save and Restart</i>) saves the current .fly file and reloads 
+    it right after, restarting the simulation;</li>
+  <li><i>RV</i> (<i>Revert to Saved</i>) matches the option with the same name 
+    in the <i>File</i> submenu of the window menu;</li>
+  <li><i>Cut</i>, <i>Copy</i>, <i>Paste</i> and <i>Duplicate</i> work the same 
+    way as their counterparts in the <i>Edit</i> submenu of the window menu;</li>
+  <li>The <i>Arrow Up</i> and <i>Arrow Down</i> buttons are used to change the 
+    order in which the classes are displayed below the corresponding DLL item 
+    in the tree view;</li>
+  <li>The <i>Object Only</i> and <i>Simulate</i> buttons are switches, in the 
+    same way as the options with the same name in the <i>View</i> submenu of the 
+    window menu;</li>
+  <li>The <i>About</i> button displays information about the development of <b>flyEditor.exe</b> 
+    and its copyright.</li>
+</ul>
+<h3>The Tree View</h3>
+<p>The leftmost part of the <b>flyEditor.exe</b> window is the <i>tree view</i>. 
+  A tree view is a Windows control that displays items organized as a hierarchy. 
+  <b>flyEditor.exe</b>'s tree view displays several basic items (the &quot;root-items&quot;), 
+  that can be expanded to show subitems. Upon selecting an item on the tree view, 
+  the list view beside it is updated, displaying a list of parameters corresponding 
+  to the selected item. Each of the root items, as well as the subitems appliable 
+  to them, are discussed below.</p>
+<p><img src="../img/editor5.gif" width="226" height="418"></p>
+<p>The <i>Global</i> root item represents Fly3D global and flyEngine's variables. 
+  When this item is selected, all the variables and their values are displayed 
+  in the list view, making it possible to modify them.</p>
+<p>The <i>Plugins</i> root item represents all the plugin DLLs, classes and instances 
+  that exist in the currently loaded .fly file. After selecting the <i>Plugins</i> 
+  root item, it is possible to insert a new plugin DLL to the simulation. Any 
+  DLLs present in the current file are displayed one level inside the <i>Plugins</i> 
+  root item. One level further are the classes implemented in each plugin DLL. 
+  These can be selected for creating a new instance of the class, as a stock object. 
+  The existing instances of a given class are represented by subitems below the 
+  class item in the hierarchy, and can be selected for modifying their parameters, 
+  which appear in the list view.</p>
+<p>The <i>Objects</i> root item represents all the .f3d and .k3d objects existing 
+  in the currently loaded .fly file. Upon selecting it, all the .f3d and .k3d 
+  objects in the file are displayed in the list view, together with some parameters 
+  for them, like name, number of animations, etc.</p>
+<p>The <i>Sounds</i> root item represents all the sound files existing in the 
+  currently loaded .fly file. Upon selecting it, all the sound files are displayed 
+  in the list view, together with some parameters for them, like name, length, 
+  format, etc.</p>
+<p>The <i>Textures</i> root item represents the whole set of textures applied 
+  to the faces in the currently loaded level. Upon selecting it, all the textures 
+  and lightmaps are displayed in the list view, together with some of their parameters, 
+  like name, size, etc.</p>
+<p>The <i>Shaders</i> root item represents all shaders applied to the faces in 
+  the currently loaded level. Upon selecting it, all the shaders are displayed 
+  in the list view, together with some of their parameters, like name, number 
+  of passes, etc.</p>
+<h3>The List View</h3>
+<p>The central part of the <b>flyEditor.exe</b> window houses the <i>list-view</i>. 
+  A list view is a Windows control that displays a table, where the lines represent 
+  items of data and the columns represent fields in which items' parameters are 
+  represented. </p>
+<p>Depending on the item selected in the tree view, the list view can display 
+  parameters relative to a given instance of a class, as an active or stock object; 
+  a list of textures, shaders, sounds or .f3d and .k3d mesh objects; or a list 
+  of global variables.</p>
+<p><img src="../img/editor6.gif" width="247" height="411"></p>
+<p>When displaying a list of object parameters, the list view enumerates them 
+  and displays their values; by double-clicking the left mouse button on a parameter, 
+  the corresponding value edition dialog box is displayed, and the parameter's 
+  value can be changed.</p>
+<p>When displaying a list of textures, shaders or .f3d and .k3d files, selecting 
+  an item displays the corresponding texture or shader or mesh in the render view 
+  to the right. These entities can be rotated by dragging the left mouse button 
+  in the render view; zooming can also be performed, by dragging the right mouse 
+  button on the render view.</p>
+<p>When displaying a list of sounds, double-clicking the left mouse button on 
+  a sound plays the corresponding .wav file.</p>
+<h3>The Stock/Active Objects Menu</h3>
+<p>Finally, on the upper rightmost part of <b>flyEditor.exe</b> is located the 
+  <i>Stock and Active Objects</i> menu. Here, it is possible to create active 
+  objects from stock objects, inserting them into the simulation. Also, this menu 
+  allows the selection of active objects created from a given stock object. It 
+  is also possible to destroy an active object, removing it from the simulation 
+  immediately. </p>
+<p><img src="../img/editor7.gif" width="323" height="28"></p>
+<p>When an instance of a class is selected in the tree-view, the list view displays 
+  a list of parameters corresponding to the respective stock object. If the <i>Active 
+  Objects</i> check box in the <i>Stock and Active Objects</i> menu is checked, 
+  then the list view will display the list of parameters of the first active instance 
+  of the object. With the <i>arrow buttons</i>, the current active object can 
+  be changed. The <i>Activate</i> button creates a new active object as a clone 
+  of the selected stock object; the <i>Destroy</i> button removes the currently 
+  selected active object from the simulation.</p>
+</body>
+</html>

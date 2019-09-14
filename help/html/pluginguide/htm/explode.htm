@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>Time to blow things up: using the 'explode' class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>Time to blow things up: using the 'explode' class </h1>
+<p>Explosions are an important visual effect in vehicle and shooting simulations. 
+  They are also a nice and discreet way of taking a destroyed entity away from 
+  the scene without making it simply vanish before the eyes of the player or spectator. 
+</p>
+<p>Fly3D standard plugin <b>gamelib.dll</b> provides the <b>explode</b> class, 
+  representing an explosion. Actually, the <b>explode</b> class is a repository 
+  for the explosion effects: it features a particle emitting system, a sound object, 
+  a light object, a sprite and a flyBspObject object that can animate and have 
+  shaders.</p>
+<p>Using the <b>explode</b> class is very simple: firstly, a pointer to an object 
+  of that class must be declared in the new class' definition. See the example 
+  below: </p>
+<p class='code'>#include &quot;c:\fly3d\plugin\gamelib\explode.h&quot;<br>
+  <br>
+  class myclass : public flyBspObject<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;explode *e;<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;myclass();<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;int step(int dt);<br>
+  };</p>
+<p>Next, the <b>step</b> function must be used to set the explosion when the object's 
+  life reaches under 0. The explosion is set by calling the <b>explode</b> class 
+  virtual method <b>do_explode</b>. This method receives three parameters: a <b>flyVector</b> 
+  object containing the position of the explosion (typically, the same position 
+  of the exploding object), another <b>flyVector</b> object representing the direction 
+  of the explosion (typically the <b>Z</b> axis of the exploding object's local 
+  system) and an integer number as the index of the player that caused the explosion, 
+  used in multiplayer simulations and games (can be -1 for 'no player'). An excerpt 
+  exemplifying a call to <b>do_explode</b> is found below:</p>
+<p class='code'>int myclass::step(int dt)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;if(life&lt;0)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;e-&gt;do_explode(pos,Z,-1);<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;return 1;<br>
+  }</p>
+<p>The <b>explode</b> class does not implement a BSP active object at all; instead, 
+  when the <b>do_explode</b> method is called, the explosion objects are activated 
+  (the light, the sound, the particle system, etc.). The <b>explode</b> object 
+  itself never appears in the simulation, serving only for triggering the explosion 
+  effects.</p>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<html>
+<head>
+<title>Programming Tutorial - Step 6</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>6. Implementing the object's methods</h1>
+<p>In this step, the object class' methods willl be implemented. These methods 
+  are, basically, the virtual functions inherited from the <b>flyBspObject</b> 
+  class.</p>
+<h2>Init</h2>
+<p class="code">void object::init()</p>
+<p>This is the object's initialisation funtion. For our small example, it just 
+  has to initialise the object's axis-aligned bounding box (every Fly3D entity 
+  must have one). And since the object has a mesh asociated to it, the object's 
+  AABB should be the mesh's. Then we have the following code for the <b>init </b>function:</p>
+<p class="code">void object::init()<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;if(objmesh)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bbox=objmesh-&gt;bbox;<br>
+  }</p>
+<p>Refer to <a href="step8.htm">step 8</a> for a small addition to the object's<b> 
+  init </b>method.</p>
+<h2>Step</h2>
+<p class="code">int object::step(int dt)</p>
+<p>This is the per-frame update function. Every entity must update its state in 
+  this function, as it will be called once per frame during the simulation. In 
+  this example, the object will just stay still (for now). So, there is no need 
+  to implement anything in this function: just returning a valid value (1, for 
+  the object is still alive) will do. Refer to <a href="step9.htm">step 9</a> 
+  and <a href="step11.htm">step 11</a> for modifications in the object's<b> step 
+  </b>function.</p>
+<p class="code">int object::step(int dt)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;return 1;<br>
+  }</p>
+<h2>Draw </h2>
+<p class="code">void object::draw()</p>
+<p>This is the drawing function. It must be used to draw the object using OpenGL 
+  calls. In this tutorial example, a simple drawing is implemented: the object 
+  is translated to its position in 3D space (given by the <font face="Courier" size="-1">pos</font> 
+  variable), rotated to its current orientation (given by the <font face="Courier" size="-1">mat</font> 
+  variable), and its mesh is drawn. The code is as follows:</p>
+<p class="code">void object::draw()<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;if(objmesh)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glPushMatrix();<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glTranslatef(pos.x,pos.y,pos.z);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glMultMatrixf((float *)&amp;mat);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objmesh-&gt;draw();<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glPopMatrix();<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+  }</p>
+<h2>Message </h2>
+<p class="code">int object::message(const flyVector&amp; p,float rad,int msg,int 
+  param,void *data)</p>
+<p>This is the message receiving function. It must test the value of the <font face="Courier" size="-1">msg</font> 
+  parameter, treating the known message types. For now, this example's simple 
+  object will not receive any messages, returning the value 1 as an indication 
+  of normal function termination. Refer to <a href="step11.htm">step 11</a>, which 
+  adds a message treatment in the object's<b> message </b>function.</p>
+<p class="code">int object::message(const flyVector&amp; p,float rad,int msg,int 
+  param,void *data)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;return 1;<br>
+  }</p>
+<h2>Get Custom Parameters Description</h2>
+<p class="code">int object::get_custom_param_desc(int i,flyParamDesc *pd)</p>
+<p>This is a function used by the front-ends to obtain information regarding the 
+  plugins' classes' exported variables. It should always return the total number 
+  of exported variables in the class (in this case, 1), and switch the <font face="Courier" size="-1">i</font> 
+  parameter, filling the <font face="Courier" size="-1">pd</font> <b>flyParamDesc</b> 
+  instance with the desired <font face="Courier" size="-1">type</font>, <font face="Courier" size="-1">data</font> 
+  pointer and <font face="Courier" size="-1">name</font>. <font face="Courier" size="-1">type 
+  </font>must be a character representing one of Fly3D default parameter types 
+  (described in the <font face="Courier" size="-1">class_typeid.txt</font> document 
+  located in the 'util' folder inside Fly3D directory); <font face="Courier" size="-1">data</font> 
+  must be a pointer to the variable itself; <font face="Courier" size="-1">name</font> 
+  must be a string with the parameter's friendly name, to be used by the front-ends. 
+  The code is as follows:</p>
+<p class="code">int object::get_custom_param_desc(int i,flyParamDesc *pd)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;if (pd!=0)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch(i)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 
+  0:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;type='m';<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;data=&amp;objmesh;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;name=&quot;objmesh&quot;;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;return 1;<br>
+  }</p>
+<p>Refer to <a href="step8.htm">step 8</a> for an addition to the object's<b> 
+  get_custom_param_desc</b> method.</p>
+</body>
+</html>

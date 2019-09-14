@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>Fly3D Guide - Utilities</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>Utilities </h1>
+<p>Fly3D offers some useful utilities that extend its functionalities, properly 
+  configure Fly3D for the machine and make an interface with third-party software. 
+  Here is a complete list of these utilities and their respective description:</p>
+<h2>flyConfig.exe</h2>
+<p>This is the Fly3D configuration application. It enumerates all available video 
+  modes for us to choose from, and offers a great number of rendering, profile 
+  and keyboard customization options. It is run automatically upon installation 
+  of the SDK, but must be re-run whenever we change our video configuration.</p>
+<h2>flyBuilder.exe</h2>
+<p>This is the scene-building tool for Fly3D. From a .fmp file, it creates the 
+  corresponding BSP tree (.bsp file), saves the shaders of all the scene faces 
+  in a .shr file, statically illuminates the scene generating lightmaps (.lmp 
+  files), calculates visibility for PVS culling (.pvs file), generates portals 
+  information for the <a href="ai.htm">AI module</a> (.fpt file) and builds a 
+  .fly file from a class template file (.ctp file). For more information on these 
+  file types, see the <a href="files.htm">Files and File Formats</a> section. 
+  It also includes a huge list of options for building the scene with different 
+  BSP grid sizes, lightmap and texture quality, lighting parameters, and much 
+  more. Actually, <b>flyBuilder.exe</b> is just a friendly interface for building 
+  scenes: internally, it calls the <b>flyBuild.exe</b> program, which is responsible 
+  for all the processes mentioned above.</p>
+<h2>flyFonts.exe</h2>
+<p>This is a font texture generation program. We should use it to generate font 
+  textures with given patterns and sizes, to use them in our application. The 
+  <b>Render Module</b> offers text drawing routines, where a font texture should 
+  be selected.</p>
+<h2>flyInstPlugins.exe</h2>
+<p>This is a plugins installation program. It install Fly3D Plugin Wizard for 
+  Visual C++ and the import and export plugins for 3D Studio MAX 3.x or 4.x. See 
+  details below.</p>
+<h2>flyPlugin.awx</h2>
+<p>This is the Fly3D Plugin Wizard for Visual C++ 6.0. Once installed, a new project 
+  option will be available in Visual C++, with a step-by-step plugin creation 
+  wizard. <b>flyPlugin.awx</b> should be installed through the <b>flyInstPlugins.exe</b> 
+  program.</p>
+<h2>flyExpFMPx.dle</h2>
+<p>This is the .fmp file exporter plugin for 3D Studio MAX. We can build our scenes 
+  in MAX and use this plugin to save a Fly3D Map file. See more about .fmp files 
+  in the <a href="files.htm">Files and File Formats</a> section. The 'x' in <b>flyExpFMPx.dle</b> 
+  means the version of MAX which this plugin was compiled to. <b>flyExpFMPx.dle</b> 
+  should be installed through the <b>flyInstPlugins.exe</b> program.</p>
+<h2>flyExpF3Dx.dle</h2>
+<p></p>
+<p>This is the .f3d file exporter plugin for 3D Studio MAX. We can build our mesh 
+  object in MAX and use this plugin to save a Fly3D Object file, which supports 
+  static and vertex-animated models. See more about .f3d files in the <a href="files.htm">Files 
+  and File Formats</a> section. The 'x' in <b>flyExpF3Dx.dle</b> means the version 
+  of MAX which this plugin was compiled to. <b>flyExpF3Dx.dle</b> should be installed 
+  through the <b>flyInstPlugins.exe</b> program.</p>
+<h2>flyExpK3Dx.dle</h2>
+<p></p>
+<p>This is the .k3d file exporter plugin for 3D Studio MAX. We can build our mesh 
+  object in MAX and use this plugin to save a Fly3D Skeletal Object file, which 
+  supports bone-animated models. See more about .k3d files in the <a href="files.htm">Files 
+  and File Formats</a> section. The 'x' in <b>flyExpK3Dx.dle</b> means the version 
+  of MAX which this plugin was compiled to. <b>flyExpK3Dx.dle</b> should be installed 
+  through the <b>flyInstPlugins.exe</b> program.</p>
+<h2>flyImpFMPx.dli</h2>
+<p>This is the .fmp file importer plugin for 3D Studio MAX. We can open our previously-created 
+  Fly3D Map file using this plugin. See more about .fmp files in the <a href="files.htm">Files 
+  and File Formats</a> section. The 'x' in <b>flyImpFMPx.dli</b> means the version 
+  of MAX which this plugin was compiled to. <b>flyImpFMPx.dli</b> should be installed 
+  through the <b>flyInstPlugins.exe</b> program.</p>
+</body>
+</html>

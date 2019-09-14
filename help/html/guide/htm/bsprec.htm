@@ -1,0 +1,29 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Fly3D Guide - BSP recursion</TITLE>
+<META NAME="Template" CONTENT="D:\ARQUIVOS DE PROGRAMAS\MICROSOFT\OFFICE\html.dot">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</HEAD>
+<BODY TEXT="#000000" LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff">
+
+<H1>BSP recursion</H1>
+<P>A BSP tree is the basic data structure onto which a Fly3D scene is built. It uses planes existent in the geometry of the environment to recursively split the 3D space into positive and negative sides. In the end, each leaf of the BSP tree represents a convex volume in the scene. A full-length explanation of the BSP technology and apparatus used in Fly3D 1.0 is available in </P>
+<P>WATT, A. &amp; POLICARPO, F. <I>3D Games, Vol. 1 - Real-Time Rendering and Software Technology</I>. England: Addison-Wesley, 2000.</P>
+<P>Fly3D 2.0 BSP technology and implementation is fully described in</P>
+<P>WATT, A. &amp; POLICARPO, F. <I>3D Games, Vol. 2 - Advanced Techniques</I>. England: Addison-Wesley, 2001.</P>
+<P>One of the main uses of the BSP is that it allows fast polling techniques. The <B>BSP recursion functions</B> offer a fast and accurate way of searching for objects or other entities in the scene 3D space. There are several kinds of recursion functions, but all of them fill up an array of selected BSP leaf nodes (<B>selnodes</B>) and an array of objects that are inside or clip at least one of these nodes (<B>selobjs</B>). The recursion functions and the arrays mentioned before are accessible via the global variable <B>g_flyengine</B> (more on this variable in the <A HREF="engine.htm">Engine module</A> section).</P>
+<P>The different flavours of recursion functions are described below:</P>
+<P class="code">void recurse_bsp(const flyVector&amp; p,float rad,int elemtype,int 
+  pvsleaf)</P>
+<P>This function recurses the scene searching for all objects or nodes inside the sphere centered at <B>p</B> with radius <B>rad</B>. The <B>elemtype</B> parameter can be used to restrict the search to a specific type of object; if set to -1, no restriction will be made. The <B>pvsleaf</B> parameter is the index of a PVS leaf that can be used to restrict the search to nodes that are visible from the specified leaf; ommit it if this option is unwanted.</P>
+<P class="code">void recurse_bsp(const flyVector&amp; p1,const flyVector&amp; 
+  p2,int elemtype,int pvsleaf)</P>
+<P>This function recurses the scene selecting objects and nodes intersected by a ray casted from point <B>p1</B> to <B>p2</B>. The remaining parameters are the same as in the above function.</P>
+<P class="code">void recurse_bsp(const flyVector *p,int np,int elemtype,int pvsleaf)</P>
+<P>This function recurses the scene selecting objects and nodes clipped by the volume defined by the first <B>np</B> points in the <B>p</B> array. The remaining parameters are the same as in the above function.</P>
+<P class="code">void recurse_bsp_box(const flyVector&amp; min,const flyVector&amp; 
+  max,int elemtype,int pvsleaf)</P>
+<P>This function recurses the scene selecting objects and nodes clipped by the box defined by the points <B>min</B> and <B>max</B>. The remaining parameters are the same as in the above function.</P></BODY>
+</HTML>

@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>Fly3D Guide - Lighting</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>Lighting </h1>
+<p>Lighting is one of the most useful resource of rendering, being crucial for 
+  the depth and realism of the environments. Therefore, Fly3D offers a handful 
+  of options for lighting a scene, from lightmaps to vertex lights. Also, shadowing 
+  is available through pre-calculated static shadows and stencil technology for 
+  dynamic shadows.</p>
+<p>The first distinction that must be made is about lightmap-illuminated faces 
+  and vertex lights. A lightmap is a texture that represents the lighting that 
+  apply over the faces which it is mapped on, and are blended with the original 
+  texture of the face. It sure is the most used lighting technique for huge structures 
+  and surfaces. Vertex lighting is the technique of calculating the incidence 
+  of light on each vertex and interpolating between vertices to light the whole 
+  surface. It suits best for detailed triangular objects, as it is more expensive 
+  than having all the lighting pre-calculated and stored in a lightmap.</p>
+<p>Fly3D features lighmap lighting for structural faces and detail large faces; 
+  detail triangular faces, curved surfaces and meshes pertaining to dynamic objects 
+  use vertex lighting.</p>
+<p>Another important distinction concerns static and dynamic lights. Static lights 
+  are light sources with a fixed position, color and illumination radius, known 
+  at build time; these are pre-calculated and stored in the lightmaps, for faces 
+  with lightmaps applied to them; vertex light objects that do not move have their 
+  static lighting calculated at loading time; moving vertex light objects must 
+  calculate lighting from static light sources every frame during the simulation. 
+  Dynamic lights can move, change their color or illumination radius; lightmap 
+  pixels of faces with lightmaps applied must be sampled by dynamic lights every 
+  frame; vertex light objects must have a <b>flyLightVertex</b> member variable 
+  to store dynamic lights applying on them.</p>
+<p>When implementing dynamic lighting, decision must be taken whether the light 
+  source should look around for objects inside its radius or the objects shuold 
+  look for nearby lights. This depends on various factors, one of the strongest 
+  of them being the number of lights and objects that exist: if there are far 
+  more lights than objects, then the objects should look for lights around them; 
+  if there are far more objects than lights, it would be faster to have the lights 
+  look for objects around them.</p>
+<p>Fly3D scenes also feature automatic ambient lighting. Every BSP leaf node has 
+  a corresponding ambient light, which is calculated as the average of all lightmap 
+  pixels of the lightmaps applied to the node's faces. The ambient light applied 
+  to an object is then computed as the average of the ambient lights of all nodes 
+  clipped by the object.</p>
+<h1>Shadowing</h1>
+<p>Another important feature to provide depth and realism to the scene is shadowing. 
+  For faces that have lightmaps, shadows are pre-calculated at build time from 
+  static light sources; no shadows can be computed from dynamic light objects. 
+  For vertex light objects, stencil shadows can be used to cast a shadow from 
+  the closest light source, being it static or dynamic.</p>
+</body>
+</html>

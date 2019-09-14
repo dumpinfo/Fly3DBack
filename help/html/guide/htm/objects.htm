@@ -1,0 +1,14 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Fly3D Guide - Stock and active objects</TITLE>
+<META NAME="Template" CONTENT="D:\ARQUIVOS DE PROGRAMAS\MICROSOFT\OFFICE\html.dot">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</HEAD>
+<BODY TEXT="#000000" LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff">
+
+<H1>Stock and active objects</H1>
+<P>During the simulation process, many objects can be inserted in the scene; for example, when a shooter-game player fires his gun, a projectile must be added to the game, with its starting position and velocity given by the position of the gun and by characteristics of that projectile; once hitting a surface (an enemy or a wall), the projectile must be removed from the game, and maybe an explosion object should be inserted on the spot where the projectile collided. And of course, multiple copies of the same object (say, the gun's projectile) could exist in the simulation at the same time. Therefore, all this adding and removing of objects must be handled in a way that each copy of a given object has its own parameter values, and is controlled independently of the other copies. Also, when a copy of the object is inserted in the simulation, it must retain the original values for that kind of object, that is, the previously inserted objects cannot change the original values for that kind of object.</P>
+<P>This coherence is achieved by always maintaining a <B>stock</B> object, which has the original properties and parameter values for that kind of object. Then, to add a new copy of that object into the simulation, the engine uses the <B>clone</B> function (see the <A HREF="virtualf.htm">virtual functions</A> section) to make a copy of the <B>stock</B> object, and then inserts that copy into the environment. The added copy of the object is called an <B>active</B> object, as the act of inserting an object is called <B>activation</B>. This way, several <B>active</B> copies of the same object will each have its own parameter values changing over time, and the original <B>stock</B> object will remain unchanged, so that further <B>activation</B> of new copies of the object can occur by making a <B>clone</B> of the <B>stock</B> object.</P></BODY>
+</HTML>

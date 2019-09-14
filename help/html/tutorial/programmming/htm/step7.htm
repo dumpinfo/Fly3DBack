@@ -1,0 +1,112 @@
+<html>
+<head>
+<title>Programming Tutorial - Step 7</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>7. Implementing the camera's methods</h1>
+<p>In this step, the camera class' methods willl be implemented. These methods 
+  are, basically, the virtual functions inherited from the <b>flyBspObject</b> 
+  class.</p>
+<h2>Init </h2>
+<p class="code">void camera::init()</p>
+<p>This is the camera's initialisation funtion. As with the object class, all 
+  we have to do is initialise the camera's axis-aligned bounding box. But since 
+  the camera does not have a mesh associated to it, an AABB must be created. In 
+  the following code, the camera's AABB is initialised with side 50:</p>
+<p class="code">void camera::init()<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;bbox.min.vec(-25,-25,-25);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;bbox.max.vec(25,25,25);<br>
+  }</p>
+<h2>Step </h2>
+<p class="code">int camera::step(int dt)</p>
+<p>This is the per-frame update function. The camera must test for input and update 
+  its position (move <font face="Courier" size="-1">dt</font> miliseconds) in 
+  this method. In this example, the camera should move like this: the left mouse 
+  button will act as an accelerator (when pressed, the camera will move forward), 
+  and the mouse axes will be used for rotation (pitching and yawing). The following 
+  code can be divided in 3 parts:</p>
+<p>Firstly, the <font face="Courier" size="-1">mouse_down</font> variable of the 
+  <b>flyDirectX</b> class is accessed, and a test is made using the constant value 
+  <b>FLY_MOUSE_L</b> to check if the left mouse button has been pressed since 
+  the last frame; if the test succeeds, the camera's velocity must be increased 
+  by a value that depends on the direction the camera is facing (Z negative), 
+  the move velocity and the elapsed time since the last frame (<font face="Courier" size="-1">dt</font>); 
+  if the test fails, the velocity of the camera must be nullified. </p>
+<p>After that, the mouse axes are tested through the <font size="-1" face="Courier">mouse_smooth</font> 
+  variable in <b>flyDirectX</b> (for smooth mouse movement). Note that this variable 
+  is an array of two positions, corresponding to the X and Y mouse axes, respectively. 
+  If a test succeeds, the camera must be rotated over the other axis, by a value 
+  given by the mouse movement velocity and the displacement of the mouse pointer 
+  position since the last frame. The negation in the Y-axis rotation refers to 
+  inverted mouse rotation.</p>
+<p>At last, the camera must move. This part of the code is explained in <a href="step9.htm">step 
+  9 </a>, as the camera's movement and collision avoidance works the same way 
+  as the object's.</p>
+<p class="code">int camera::step(int dt)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;if (g_flydirectx-&gt;mouse_down&amp;FLY_MOUSE_L)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vel=Z*movevel*(float)(-dt);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;else<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vel.null();<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;if (g_flydirectx-&gt;mouse_smooth[0]) // mouse X<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rotate(-g_flydirectx-&gt;mouse_smooth[0]*mousevel,Y);<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;if (g_flydirectx-&gt;mouse_smooth[1]) // mouse Y<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rotate(g_flydirectx-&gt;mouse_smooth[1]*mousevel,X);<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;flyVector p,v;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;p=pos+vel*(float)dt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;v=vel+force*((float)dt/mass);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;box_collision(p,v);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;pos = p;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;vel = v;<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;return 1;<br>
+  } </p>
+<h2>Draw </h2>
+<p class="code">void camera::draw()</p>
+<p>This is the drawing function. Since tha camera will not appear in the simulation, 
+  no drawing needs to be made here, and the method is left blank.</p>
+<h2>Message </h2>
+<p class="code">int camera::message(const flyVector&amp; p,float rad,int msg,int 
+  param,void *data)</p>
+<p>This is the message receiving function. Just like the object, the camera will 
+  not receive any messages, and this method must just return 1 for normal termination.</p>
+<p class="code">int camera::message(const flyVector&amp; p,float rad,int msg,int 
+  param,void *data)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;return 1;<br>
+  }</p>
+<h2>Get Custom Parameters Description</h2>
+<p class="code">int camera::get_custom_param_desc(int i,flyParamDesc *pd)</p>
+<p>This is a function used by the front-ends to obtain information regarding the 
+  plugins' classes' exported variables. It is similar to the object's methos of 
+  the same name, and a complete explanation can be found in the <a href="step6.htm">last 
+  step</a>. The code is as follows:</p>
+<p class="code">int camera::get_custom_param_desc(int i,flyParamDesc *pd)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;if (pd!=0)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch(i)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 
+  0:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;type='f';<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;data=&amp;movevel;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;name=&quot;movevel&quot;;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 
+  1:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;type='f';<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;data=&amp;mousevel;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;name=&quot;mousevel&quot;;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;return 2;<br>
+  }</p>
+</body>
+</html>

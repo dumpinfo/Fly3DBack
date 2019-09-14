@@ -1,0 +1,29 @@
+
+
+A:Active  {
+;
+color: #99FF00
+}
+
+A:Hover  {color: #F5B049}
+a {  color: #FFFFCC; text-decoration: none; font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9pt; font-weight: 500}
+.topo {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10px; line-height: 9px}
+.back-cinza {  background-color: #555555; color: #4E4E4E}
+.lat-index {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 9pt; font-weight: bold; color: #FFAE00; text-indent: 5px}
+.back-links {  background-color: #2F304F}
+.branco {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11px; color: #CCCCCC}
+h3 {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11pt; font-weight: normal; text-transform: uppercase}
+h1 {  font-family: "BankGothic Md BT", Arial, Verdana, sans-serif; font-size: 33px; font-weight: bold; color: #6C6C6C; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; clip:   rect(   )}
+h2 {  font-family: Verdana, Arial, Helvetica, sans-serif; color: #663300; font-size: 14pt; text-transform: capitalize; font-weight: lighter}
+.pontos-link {  color: #ccff00}
+.titulo {  font-size: 27px; color: #6c6c6c; margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; font-family: Verdana, Arial, Helvetica, sans-serif; font-weight: bold}
+.sdk {  color: #896701}
+.link-2 {  color: #F29200}
+.code {  border-color: #FFAE00 #Ffae00 #Ffae00; background-color: #FFFBF2; padding-top: 2px; padding-right: 2px; padding-bottom: 2px; padding-left: 2px; margin-top: 1px; margin-right: 0.5cm; margin-bottom: 1px; margin-left: 0.5cm; font-family: "Courier New", Courier, mono; border-style: solid; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px}
+p {  font-family: "Times New Roman", Times, serif; font-size: 11pt; color: #000000; line-height: 14pt}
+h4 {  font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 11pt; font-weight: bold}
+.bol {  font-weight: bold; color: #333333}
+.back-tabela {  background-color: #ffae00}
+.back-celula {  background-color: #FFFBF2}
+.back-header {  background-color: #ffae00}
+.titulo-tutor { font-size: 22px; color: #333333; font-family: Arial, Helvetica, sans-serif; font-weight: bold}

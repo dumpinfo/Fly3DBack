@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>Programming Tutorial - Step 3</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>3. Creating a Fly3D plugin with the Visual C++ Wizard implementing two classes: 
+  camera and object</h1>
+<p>In this step, a new Fly3D plugin will be created from scratch, using the Visual 
+  C++ Plugin Wizard.</p>
+<p>First of all, Visual C++ must be run. In the 'File' menu, the 'New' sub-menu 
+  will open a window for choosing the kind of document to be created. Fly3D Plugin 
+  Wizard should be enumerated in the 'Projects' tab. It must be selected, a name 
+  must be given to the new project (in this case, 'Tutorial 1') and a folder must 
+  be chosen for the project to be saved in it. If Fly3D Plugin Wizard is not included 
+  in the list, the plugins installation program can be run again for the proper 
+  installation of the Wizard. <b>flyInstPlugins.exe</b> can be found inside the 
+  'util' folder in the Fly3D installation directory. Refer back to <a href="step2.htm">step 
+  2</a> for more info on installing the Plugin Wizard.</p>
+<p>In the first step of the Plugin Wizard, the classes must be named and added 
+  to the plugin. In this tutorial, two classes will be created: 'object' and 'camera'. 
+</p>
+<p><img src="../img/wizard1.gif" width="477" height="384"></p>
+<p>In the second step, all parameters exported by the classes in the plugin must 
+  be enumerated: their name, type and default value must be specified. Every parameter 
+  must be of one of Fly3D predefined types, enumerated in the correspondent combo-box.</p>
+<p>In our tutorial, the 'camera' class will have 2 parameters: 'mousevel' (a floating 
+  point number that defines the velocity of mouse-look) and 'movevel' (another 
+  floating point defining the velocity of camera movement). The 'object' class 
+  will have only 1 parameter, 'objmesh', of type 'f3d static mesh', that will 
+  be the triangular mesh of the object.</p>
+<p><img src="../img/wizard2.gif" width="477" height="384"></p>
+<p>The third and last step of the wizard consists simply of selecting the Fly3D 
+  installation path. </p>
+<p>After all this, Fly3D Plugin Wizard must have created 3 files in your project: 
+  'Tutorial1.h', 'Tutorial1.cpp' and 'Tutorial1.def'. The header file now contains 
+  all the information enumerated in the steps 1 and 2 of the Plugin Wizard: the 
+  classes and their parameters.</p>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>Fly3D Guide - Mathematics module: flyMath</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>Mathematics module: flyMath</h1>
+<p><img src="../img/math.gif" width="150" height="106"> </p>
+<p>The Fly3D 2.0 mathematics module <b>flyMath</b> is a DLL including several 
+  classes that implement all the mathematical operations needed in the simulation. 
+  The DLL exports those classes so that the engine can use them and the operations 
+  they offer.</p>
+<p>The <b>flyVector</b> class surely is the most used entity in the whole system. 
+  It represents a vector in 3D or 4D space, and its coordinates are accessed as 
+  <b>x</b>, <b>y</b>, <b>z</b> and <b>w</b>, respectively. Among the various vector 
+  operations provided are negation, normalization, length and products.</p>
+<p>The <b>flyMatrix</b> class represents a 4x4 matrix that can be used as a rotation 
+  matrix. It includes several operations for rotation, along with matrix-matrix 
+  product and many others.</p>
+<p>The <b>flyQuaternion</b> class implements rotation quaternions, and include 
+  operations like rotations and matrix-to-quaternion and quaternion-to-matrix 
+  conversions.</p>
+<p>The <b>flyMath</b> library also features two other classes: <b>flyPlane</b>, 
+  which represents a plane in 3D space, storing its normal and distance to the 
+  origin values, and <b>flyVertex</b>, which represents a vertex with texture 
+  coordinates, normal and color.</p>
+<p>Examples of common math operations are:</p>
+<p class="code">flyVector v1(1); // initialize to (1,1,1,1)<br>
+  flyVector v2(2,2,2); // initialize (2,2,2,0)<br>
+  flyVector v3(0,1,0,1); // initialize (0,1,0,1)<br>
+  <br>
+  flyVector v=v1+v2*v3; // v=(1,3,1,1);<br>
+  <br>
+  float distance=(v1-v2).length();<br>
+  float dotprod=FLY_VECDOT(v1,v2);<br>
+  <br>
+  v.cross(v1,v2); // sets v to cross product of v1 and v2<br>
+  <br>
+  flyMatrix m;<br>
+  m.set_rotation(10,flyVector(0,0,1)); // set to a rotation matrix of 10 degrees 
+  around z axis<br>
+  <br>
+  v.vec(1,2,3); // sets v to (1,2,3,0)<br>
+  v.normalize(); // set v to unit length<br>
+  <br>
+  v=v*m; // rotate vector v with matrix m</p>
+</body>
+</html>

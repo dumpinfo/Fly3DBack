@@ -1,0 +1,37 @@
+<html>
+<head>
+<title>Fly3D Guide - Rendering module: flyRender</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>Rendering module: flyRender </h1>
+<p><img src="../img/render.gif" width="152" height="195"></p>
+<p><b>flyRender</b> DLL is the engine's rendering module. It takes care of all 
+  operations and data structures related to the rendering task, using OpenGL as 
+  the graphics API. The DLL exports its main class, <b>flyRender</b>, and a global 
+  instance of that class, <b>g_flyrender</b>, allowing full access to its functionality. 
+  It is declared in flyRender.h as follows:</p>
+<p class="code">// global flyRender instance<br>
+  extern FLY_RENDER_API flyRender *g_flyrender;</p>
+<p>Two functions are provided to initialise and free all the <b>flyRender</b> 
+  resources: <b>fly_init_render</b> and <b>fly_free_render</b>, respectively. 
+  These two functions are declared in flyRender.h as follows:</p>
+<p class="code">// global render manager initialisation method<br>
+  FLY_RENDER_API void fly_init_render(HWND hWnd,HINSTANCE hInst);<br>
+  // global render manager release method<br>
+  FLY_RENDER_API void fly_free_render();</p>
+<p>The <b>flyRender</b> class holds all the rendering configuration variables, 
+  like the color-depth and the number of available texture units, and offers a 
+  great number of methods related to rendering, like setting the full-screen mode, 
+  drawing text on screen and enabling or disabling 2D and 3D drawing.</p>
+<p>The rendering module provides two more classes: <b>flyPicture</b>, which is 
+  used to store images loaded from TGA or JPEG files, and <b>flyTexCache</b>, 
+  available through the global variable <b>g_flytexcache</b>, which implements 
+  a texture management unit for applying textures to objects upon rendering. The 
+  <b>g_flytexcache</b> global variable is declared in flyTexCache.h as follows:</p>
+<p class="code">// global flyTexCache instance<br>
+  extern FLY_RENDER_API flyTexCache *g_flytexcache; </p>
+</body>
+</html>

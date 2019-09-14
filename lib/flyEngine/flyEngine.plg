@@ -1,0 +1,208 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: Fly3D_engine - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x416 /fo"Debug/flyEngine.res" /d "_DEBUG" "C:\Program Files\Fly3D\lib\flyEngine\flyEngine.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP31.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /I "\mssdk\include" /D "_DEBUG" /D "WIN32" /D "_WINDOWS" /D "FLY_ENGINE_EXPORTS" /Fp"Debug/flyEngine.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"C:\Program Files\Fly3D\lib\flyEngine\flyAI.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyBaseObject.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyBezier.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyBoundBox.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyBspNode.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyBspObject.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyConsole.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyDLL.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyEngine.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyEngineBspRecurse.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyEngineDraw.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyEngineGetSet.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyEngineInit.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyEngineLoad.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyFace.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyFile.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyFrustum.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyHashList.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyInputMap.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyLight.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyLocalSystem.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyMesh.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyMultiplayer.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyOcTree.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyParamDesc.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyParticle.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyPolygon.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyShader.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flySkeletonMesh.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flySound.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyStaticMesh.cpp"
+"C:\Program Files\Fly3D\lib\flyEngine\flyString.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP31.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP32.tmp" with contents
+[
+opengl32.lib glu32.lib winmm.lib dxguid.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:windows /dll /incremental:yes /pdb:"Debug/flyEngine.pdb" /debug /machine:I386 /nodefaultlib:"LIBC.lib" /out:"../../flyEngine.dll" /implib:"Debug/flyEngine.lib" /pdbtype:sept /libpath:"\mssdk\lib" 
+".\Debug\flyAI.obj"
+".\Debug\flyAnimatedMesh.obj"
+".\Debug\flyBaseObject.obj"
+".\Debug\flyBezier.obj"
+".\Debug\flyBoundBox.obj"
+".\Debug\flyBspNode.obj"
+".\Debug\flyBspObject.obj"
+".\Debug\flyConsole.obj"
+".\Debug\flyDLL.obj"
+".\Debug\flyEngine.obj"
+".\Debug\flyEngineBspRecurse.obj"
+".\Debug\flyEngineDraw.obj"
+".\Debug\flyEngineGetSet.obj"
+".\Debug\flyEngineInit.obj"
+".\Debug\flyEngineLoad.obj"
+".\Debug\flyFace.obj"
+".\Debug\flyFile.obj"
+".\Debug\flyFrustum.obj"
+".\Debug\flyHashList.obj"
+".\Debug\flyInputMap.obj"
+".\Debug\flyLight.obj"
+".\Debug\flyLocalSystem.obj"
+".\Debug\flyMesh.obj"
+".\Debug\flyMultiplayer.obj"
+".\Debug\flyOcTree.obj"
+".\Debug\flyParamDesc.obj"
+".\Debug\flyParticle.obj"
+".\Debug\flyPolygon.obj"
+".\Debug\flyShader.obj"
+".\Debug\flySkeletonMesh.obj"
+".\Debug\flySound.obj"
+".\Debug\flyStaticMesh.obj"
+".\Debug\flyString.obj"
+".\Debug\flyEngine.res"
+".\cpuid.lib"
+".\unzip_zlib.lib"
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP32.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+flyAI.cpp
+flyAnimatedMesh.cpp
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(209) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(212) : error C2400: inline assembler syntax error in 'opcode'; found '['
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(269) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm2'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(270) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm3'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(278) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(282) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(285) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(286) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(287) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(291) : error C2400: inline assembler syntax error in 'opcode'; found '['
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(375) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm4'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(376) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm5'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(377) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm6'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(378) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm7'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(386) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(390) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(393) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(394) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(395) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(399) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm2'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(403) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm3'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(406) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm2'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(407) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm3'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(408) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm2'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(411) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(412) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm3'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(413) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(414) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm2'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(415) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(419) : error C2400: inline assembler syntax error in 'opcode'; found '['
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(457) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm2'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(458) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm3'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(464) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(467) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(469) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(470) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(471) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(473) : error C2400: inline assembler syntax error in 'opcode'; found '['
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(529) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm4'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(530) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm5'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(531) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm6'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(532) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm7'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(538) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(541) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm2'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(543) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(544) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm2'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(545) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(546) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(549) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(551) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(552) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+C:\Program Files\Fly3D\lib\flyEngine\flyAnimatedMesh.cpp(554) : error C2400: inline assembler syntax error in 'opcode'; found '['
+flyBaseObject.cpp
+flyBezier.cpp
+flyBoundBox.cpp
+flyBspNode.cpp
+flyBspObject.cpp
+flyConsole.cpp
+flyDLL.cpp
+flyEngine.cpp
+flyEngineBspRecurse.cpp
+flyEngineDraw.cpp
+flyEngineGetSet.cpp
+flyEngineInit.cpp
+flyEngineLoad.cpp
+flyFace.cpp
+flyFile.cpp
+flyFrustum.cpp
+flyHashList.cpp
+flyInputMap.cpp
+flyLight.cpp
+flyLocalSystem.cpp
+flyMesh.cpp
+flyMultiplayer.cpp
+flyOcTree.cpp
+flyParamDesc.cpp
+flyParticle.cpp
+flyPolygon.cpp
+flyShader.cpp
+flySkeletonMesh.cpp
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(374) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(391) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm4'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(392) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm5'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(393) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm6'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(394) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm7'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(398) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm3'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(402) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(403) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(404) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(405) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(409) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(410) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(411) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(412) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(416) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(417) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(418) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(419) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(423) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(424) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(425) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm1'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(426) : error C2400: inline assembler syntax error in 'opcode'; found 'xmm0'
+c:\program files\fly3d\lib\flyengine\flyskeletonmesh.cpp(440) : error C2400: inline assembler syntax error in 'opcode'; found '['
+flySound.cpp
+flyStaticMesh.cpp
+flyString.cpp
+Error executing cl.exe.
+
+
+
+<h3>Results</h3>
+flyEngine.dll - 75 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

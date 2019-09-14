@@ -1,0 +1,136 @@
+<html>
+<head>
+<title>Main Frontend: flyFrontend.exe</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>Main Frontend: flyFrontend.exe </h1>
+<p><b>flyFrontend.exe</b> is the main frontend application used in the engine. 
+  It is composed by a single window where the simulation images are rendered, 
+  and a menu with all the options available in Fly3D. It can switch between windowed 
+  and fullscreen modes, and serves for viewing demos and final versions of games/apps 
+  in action.</p>
+<p>This frontend works with Fly3D scene files (.fly), which contain all information 
+  needed to start running a given level. Upon opening an existing .fly file, the 
+  frontend calls the engine's level initialization methods, which initializes 
+  all plugin DLLs needed in the level. The BSP is then loaded, and the objects 
+  and entities are created and initialized, and the simulation begins.</p>
+<p>The following sections deal with all the options available in <b>flyFrontend.exe</b> 
+  menus.</p>
+<h3>The Window Menu</h3>
+<p><b>flyFrontend.exe</b> features a simple window menu, with basic options, like 
+  loading a .fly file, quitting the application and changing a great number of 
+  rendering options, which are also available through the functinos keys on the 
+  keyboard.</p>
+<p><img src="../img/frontend1.gif" width="480" height="384"> </p>
+<p>The <i>File</i> submenu has only 4 items: <i>Open</i>, for opening a scene 
+  file (*.fly); <i>Close</i>, for closing the currently open file and leaving 
+  the screen blank (like in the figure above); <i>About</i>, for information concerning 
+  the application developers; and <i>Exit</i>, for quitting <b>flyFrontend.exe</b>.</p>
+<p><img src="../img/frontend2.gif" width="480" height="384"></p>
+<p>The <i>View</i> submenu has 14 items: </p>
+<ul>
+  <li><i>Toggle Full-Screen (Alt+Enter)</i> does what its caption implies: switches 
+    between windowed and fullscreen modes;</li>
+  <li><i>Menu (F1)</i> loads a special level called <b>menu.fly</b>, which is 
+    actually a menu level for browsing the other .fly files present in the system, 
+    creating a multiplayer game starting the server, and playing pre-recorded 
+    demos;</li>
+  <li><i>Mute (F2)</i> turns off all sound in the simulation;</li>
+  <li><i>Save Panorama (F3)</i> saves a panoramic screenshot centered at the current 
+    camera position, to be viewed with <b>Paralelo's Pan3D Control</b>;</li>
+  <li><i>Save Screen (F4)</i> saves a screenshot in Targa format, and places it 
+    in the 'data' folder inside Fly3D installation;</li>
+  <li><i>Node Only (F5)</i> tells the engine to draw only the BSP node(s) which 
+    the camera is inside or clips (for debugging purposes);</li>
+  <li><i>PVS (F6)</i> toggles PVS culling on/off;</li>
+  <li><i>Mipmap (F7)</i> toggles Mip-mapping on/off;</li>
+  <li><i>Filtering (F8)</i> toggles texture filtering on/off;</li>
+  <li><i>Multitexture (F9)</i> toggles Multexturing on/off;</li>
+  <li><i>Stencil (F10)</i> toggles the use of stencil buffer for dynamic shadows 
+    on/off;</li>
+  <li><i>Wireframe (F11)</i> toggles the wireframe mode on/off;</li>
+  <li><i>Clear Background (F12)</i> toggles filling the background in black on/off 
+    (useful together with the wireframe mode);</li>
+  <li><i>Status (Tab)</i> toggles drawing the 2D layer and text layer on/off.</li>
+</ul>
+<h3>The In-Game Menu</h3>
+<p><b>flyFrontend.exe</b> also has a cool in-game menu with several options, including 
+  some of the ones found in the window menu. It is called by pressing the 'Esc' 
+  key. The in-game menu consists of four sub-menus: <i>File</i>, <i>Render</i>, 
+  <i>Sound</i> and <i>About</i>.</p>
+<p><img src="../img/frontend3.jpg" width="180" height="75"></p>
+<p>The <i>File</i> submenu includes the following options: <i>Close</i>, which 
+  closes the currently loaded .fly file; <i>Menu</i>, which loads the <b>menu.fly</b> 
+  level, consisting of a room where it is possible to browse for available .fly 
+  files, create and join a multiplayer game, and run a pre-recorded demo; and 
+  <i>Exit</i>, which quits <b>flyFrontend.exe</b>.</p>
+<p><img src="../img/frontend4.jpg" width="205" height="186"></p>
+<p>The <i>Render</i> submenu includes some items also available in the window 
+  menu. Refer to the previous section for explanations on the <i>Multitexture</i>, 
+  <i>Texture Filter</i>, <i>Texture Mip-Map</i>, <i>Stencil Shadows</i>, <i>Clear 
+  Background </i>, <i>Draw Wireframe</i>, <i>Draw No PVS</i> and <i>Draw BSP CamNode 
+  Only</i> options. The additional options are<i> Dynamic Lighting</i>, which 
+  turns all dynamic light sources on/off, and <i>Draw Portals and Mirrors</i>, 
+  which turns the drawing of portals and mirrors on/off.</p>
+<p><img src="../img/frontend5.jpg" width="234" height="73"></p>
+<p>The <i>Sound</i> submenu includes the <i>Effects Volume</i> item, which shows 
+  the sound volume for special effects, and the <i>Mute Game Sounds</i> item, 
+  which turns off all sounds in the simulation (just like the <i>Mute</i> option 
+  of <b>flyFrontend</b> window menu.</p>
+<p><img src="../img/frontend6.jpg" width="281" height="78"></p>
+<p>Finally, the <i>About</i> submenu shows 3 labels which are not actually menu 
+  items; they just display, respectively, the current Fly3D version that is running, 
+  the currently loaded .fly file, and the currently loaded .bsp file.</p>
+<h3>The Console</h3>
+<p><b>flyFrontend.exe</b> also features a console for entering commands, that 
+  can be called by pressing the '`' key. Almost all operations with plugins and 
+  objects, like loading a DLL or activating an object, can be performed through 
+  console commands. </p>
+<p><img src="../img/frontend7.jpg" width="640" height="177"></p>
+<p>Below is an enumeration of all the available commands, with their correct sintax 
+  and a brief explanation of each of them:</p>
+<ul>
+  <li><i>get &lt;varname&gt; | get &lt;objname.objparam&gt;</i>: queries the value 
+    of a global variable or an object parameter and shows it in the console screen;</li>
+  <li><i>set &lt;varname&gt; &lt;value&gt; | set &lt;objname.objparam&gt; &lt;value&gt;</i>: 
+    sets the value of a global variable or object parameter to the given value;</li>
+  <li><i>map &lt;path/level&gt;.fly | map none</i>: loads the given map or unloads 
+    the current map (<i>map none</i>);</li>
+  <li><i>save</i>: saves the currently loaded .fly file with any modifications 
+    made during the simulation;</li>
+  <li><i>listgames | listgames &lt;ipaddress&gt;</i>: lists all the multiplayer 
+    games currently online in the local network (<i>listgames</i>) or on the given 
+    machine (<i>listgames &lt;ipaddress&gt;</i>);'</li>
+  <li><i>connect | connect &lt;ipaddress&gt; | connect &lt;ipaddress&gt; &lt;gamenum&gt;</i>: 
+    joins the first multiplayer game in the local network (<i>connect</i>) or 
+    on the given machine (<i>connect &lt;ipaddress&gt;</i>), or the given multiplayer 
+    game (<i>connect &lt;ipaddress&gt; &lt;gamenum&gt;</i>); the game number can 
+    be queried with the <i>listgames</i> command;</li>
+  <li><i>disconnect</i>: disconnects from the multiplayer game to which the client 
+    is currently connected;</li>
+  <li><i>list plugins | list classes | list &lt;classname&gt; | list &lt;objname&gt;</i>: 
+    queries the list of all plugins (<i>list plugins</i>) or classes(<i>list classes</i>), 
+    the list of instances of a given class (<i>list &lt;classname&gt;</i>), or 
+    the list of parameter and their values from a given object (<i>list &lt;objname&gt;</i>), 
+    and shows it on the console screen;</li>
+  <li><i>activate &lt;objname</i>&gt;: clones the given instance of an object 
+    and inserts it into the simulation;</li>
+  <li><i>destroy &lt;objname</i>&gt;: destroys the given active object, removing 
+    it from the simulation;</li>
+  <li><i>insert &lt;plugin&gt;.dll</i>: loads the given plugin DLL and all of 
+    its classes;</li>
+  <li><i>remove &lt;plugin&gt;.dll</i>: unloads the given plugin DLL and all of 
+    its classes;</li>
+  <li><i>playdemo &lt;demofile&gt;.fdm</i>: plays the given pre-recorded demo 
+    file;</li>
+  <li><i>timedemo &lt;demofile&gt;.fdm</i>: plays the given pre-recorded demo 
+    file as a time demo, without the time delay of messages;</li>
+  <li><i>exec &lt;commandline&gt;</i>: executes a generic Windows command;</li>
+  <li><i>quit</i>: exits <b>flyFrontend.exe</b>.
+  </li>
+</ul>
+</body>
+</html>

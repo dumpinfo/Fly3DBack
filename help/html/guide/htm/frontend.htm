@@ -1,0 +1,69 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Fly3D Guide - Frontends</TITLE>
+<META NAME="Template" CONTENT="D:\ARQUIVOS DE PROGRAMAS\MICROSOFT\OFFICE\html.dot">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</HEAD>
+<BODY TEXT="#000000" LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff">
+
+<H1>Front-ends </H1>
+<P>Besides the SDK itself, Fly3D also offers a great number of front-end applications, that serve inumerous purposes. There are fornt-ends for adding, deleting and editing entities, manipulating shader effects, configuring the system, and much more. A complete list of these applications and a description of each of them is found below:</P>
+<h3>flyFrontend.exe</h3>
+<P>This is the main front-end application of the engine. It consists of a rendering 
+  window, where simulation occurs, and a menu for opening .fly files. The full-screen 
+  mode is a great way to see exactly what your game or application looks like. 
+  By pressing F1 while in this front-end, we can run a menu where we can choose 
+  single or multi-player modes, load a .fly file and start a simulation, or play 
+  a pre-recorded demo file (for more information on .fly files, see the <A HREF="files.htm">Files 
+  and File Formats</A> section). <B>FlyFrontend</B> also features a huge list 
+  of options, like switching texture filtering modes, mip-mapping, wireframe mode, 
+  mute, turning the PVS culling on or off, taking a screenshot, and much more. 
+  Here is a list of all the options:</P>
+<P>F1: Menu<BR>
+F2: Mute<BR>
+F3: Record Demo<BR>
+F4: Take Screenshot<BR>
+F5: Node-only Mode<BR>
+F6: PVS Toggle<BR>
+F7: Mip-Mapping Toggle<BR>
+F8: Texture Filtering Toggle<BR>
+F9: Multitexture Toggle<BR>
+F10: Stencil Toggle<BR>
+F11: Wireframe Toggle<BR>
+F12: Clear Background</P>
+<h3>flyEditor.exe</h3>
+<P>This is the main editing tool in Fly3D. It consists of a tree-view, where all 
+  entities of the scene are displayed and categorized; a list-view, where parameters 
+  are shown and edited; and a rendering window, where we can see our game or application 
+  in action. <B>flyEditor</B> allows on-the-fly parameter change visualization, 
+  that is, we change a value in the list-view and see the results in the rendering 
+  view. We can also load additional plugins to use in our game or application, 
+  add and delete entities, modify existing ones, and save a .fly file with all 
+  these configurations.</P>
+<h3>flyShader.exe</h3>
+<P>This is the shader effects editing tool. With it, we can load the entire shaders 
+  list (a .shr file) of a given scene, edit the effects and see the shader in 
+  action in the rendering window. We can also load a .f3d mesh object, edit its 
+  shader and see it animating. For more information on .shr and .f3d files, see 
+  the <A HREF="files.htm">Files and File Formats</A> section. We can even apply 
+  vertex programs to the mesh, using a script file. <B>flyShader</B> features 
+  all the possible shader effects for a maximum of 8 shader passes, with alpha 
+  channel blending, RGB generation functions, animation maps consisting of various 
+  key-frames, scrolling, rotation and scaling of textures, environment mapping, 
+  texture clamping, and much more.</P>
+<h3>flyServer.exe</h3>
+<P>This is the stand-alone console multi-player server. We should call it from 
+  within <B>flyFrontend</B>, through the 'Multiplayer' menu option, to create 
+  a server for the desired scene. Then, players connect to the server using the 
+  'connect' console command or from the <B>flyFrontend</B> menu.</P>
+<h3>fly3d.ocx</h3>
+<P>This is Fly3D ActiveX Control. With it, the whole Fly3D Engine is available 
+  for in-browse applications, such as Web 3D games, 3D browsing, 3D virtual shopping, 
+  3D presentations, and much more. We just needs to build a HTML file with <B>Fly3d.ocx</B> 
+  inside it, and use the control's commands to load .fly files and start the 3D 
+  simulation. More about .fly files in the <A HREF="files.htm">Files and File 
+  Formats</A> page.</P>
+</BODY>
+</HTML>

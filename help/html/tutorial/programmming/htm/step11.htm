@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>Programming Tutorial - Step 11</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>11. Adding dynamic lighting and dynamic shadows to the object </h1>
+<p>For the last step of the tutorial, lighting and shadowing will be implemented 
+  for the <b>object</b> class, so that the object's mesh is lit and casts shadows.</p>
+<p>Firstly, a <b>flyLightVertex</b> member variable must be added to the <b>object</b> 
+  class. <b>flyLightVertex</b> is a class from inside Fly3D engine, which implements 
+  an array of dynamic lights. It shuold be declared in the <b>object </b>class 
+  definition like this:</p>
+<p class="code">flyLightVertex dynlights;</p>
+<p>Now the object must search the environment around it, looking for light sources 
+  that will light it. This is done in the object's <b>step</b> function through 
+  the engine method <b>recurse_bsp</b>:</p>
+<p class="code">int object::step(int dt)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;flyVector p,v;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;p=pos+vel*(float)dt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;v=vel+force*((float)dt/mass);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;box_collision(p,v);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;pos = p;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;vel = v;<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;g_flyengine-&gt;recurse_bsp(pos,2048,TYPE_LIGHT);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;for(int i=0;i&lt;g_flyengine-&gt;selobjs.num;i++ )<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;light *l=(light *)g_flyengine-&gt;selobjs[i];<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if (g_flyengine-&gt;collision_test(pos,l-&gt;pos,FLY_TYPE_STATICMESH)==0)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dynlights.add_light(l-&gt;pos,l-&gt;color,l-&gt;illumradius);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;return 1;<br>
+  } </p>
+<p>Note that the <b>collision_test</b> call tests if there is a wall (<b>FLY_TYPE_STATICMESH</b>) 
+  between the light and the object.</p>
+<p>Now that the object can already find light sources around it, it must be lit 
+  by them. This is done in the object's <b>draw</b> function, using the <b>flyLightVertex</b> 
+  method <font face="Courier" size="-1">init_draw</font>:</p>
+<p class="code">void object::draw()<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;if(objmesh)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dynlights.init_draw(this);<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glPushMatrix();<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glTranslatef(pos.x,pos.y,pos.z);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glMultMatrixf((float *)&amp;mat);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objmesh-&gt;draw();<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glPopMatrix();<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; glDisable(GL_LIGHTING);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+  }</p>
+<p>The two lines of code added above are enough for the object to be lit by the 
+  dynamic lights stored in the <font face="Courier" size="-1">dynlights</font> 
+  variable. As a last task, shadow casting will now be implemented in the <b>object</b> 
+  class. It will be done through overriding the <b>fyBspObject</b> virtual function 
+  <b>draw_shadow</b>:</p>
+<p class="code">void object::draw_shadow()<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;int i=dynlights.get_closest(pos);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;if (i!=-1)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glPushMatrix();<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glTranslatef(pos.x,pos.y,pos.z);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glMultMatrixf((float *)&amp;mat);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;flyVector v=dynlights.pos[i]-pos;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;v.normalize();<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objmesh-&gt;draw_shadow_volume(v*mat_t);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;glPopMatrix();<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+  }<br>
+  <font face="Courier"> </font> </p>
+<p>The <font face="Courier" size="-1">get_closest</font> method finds the closest 
+  light in the array; the <font face="Courier" size="-1">draw_shadow_volume</font> 
+  method draws a shadow of the mesh in a given position and orientation.</p>
+<p>Finally, a useful note is about the object searching for lights around it. 
+  There is another way of determining which lights will apply which objects: the 
+  lights themselves could send messages to every object within the sphere defined 
+  by its position and radius. This option suits better in a situation where the 
+  number of lights is less than the number of objects to be lit. If this is not 
+  the case, the way it was implemented in this tutorial will do, with the objects 
+  themselves looking for light sources around them.</p>
+</body>
+</html>

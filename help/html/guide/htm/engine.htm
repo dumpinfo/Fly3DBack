@@ -1,0 +1,38 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Fly3D Guide - Engine module: flyEngine</TITLE>
+<META NAME="Template" CONTENT="D:\ARQUIVOS DE PROGRAMAS\MICROSOFT\OFFICE\html.dot">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</HEAD>
+<BODY TEXT="#000000" LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff">
+
+<H1>Engine module: flyEngine </H1>
+<P><IMG SRC="../img/engine.gif" WIDTH=524 HEIGHT=212></P>
+<P><B><BR>
+flyEngine</b> DLL is the engine's main module. It represents an interface between plugins and the back-end modules. This DLL implements several classes and lots of useful methods that handle the per-frame update of the application state and coordinate the various plugins, giving each of them a chance to add its functionality to the simulation. It also includes the several offline phases required to load a scene, initialize plugins and objects and start the simulation from a valid initial state.</P>
+<P>The engine module is characterized mainly by the <B>flyEngine</B> class, which 
+  encloses the most vital data and methods of the engine, like data loading, lighting 
+  calculus and <A HREF="bsprec.htm">BSP recursion</A> functions, as well as the 
+  BSP tree itself, geometry data in the form of vertices and faces and all the 
+  simulation global parameters. We can access the data and use the methods in 
+  this class via its global instance, called <B>g_flyengine</B> and available 
+  throughout all the structure of the application. This object is declared in 
+  fly3d.h as follows:</P>
+<P class="code">// global flyEngine instance<BR>
+  extern FLY_ENGINE_API flyEngine *g_flyengine;</p>
+<P>An important remark concerning the use of the <B>g_flyengine</B> object is 
+  the following: we must use the global functions <B>fly_init_engine</B> and <B>fly_free_engine</B> 
+  to initialise it before the simulation starts and to release it after everything 
+  is over, respectively. These functions will assure that all necessary resources 
+  are allocated to the engine prior to using it and free any resources it allocated 
+  in the past. The two functions are declared in fly3d.h as follows:</P> 
+<P class="code">// global engine initialisation method<BR>
+  FLY_ENGINE_API void fly_init_engine(HWND hWnd,HINSTANCE hInst,int appid=FLY_APPID_NONE);<BR>
+  <BR>
+  // global engine release method<BR>
+  FLY_ENGINE_API void fly_free_engine();</P>
+<P>Besides the robust <B>flyEngine</B> class, there is a high number of other important classes exported by this DLL. The most important of them is the <B>flyBspObject</B> class, implementing a generic entity which exists in the BSP tree. This class derives from three other classes, using important attributes from them: from <B>flyParticle</B>, it inherits mass, position, velocity, bump factor and many other physical entities responsible for positioning and movement; from <B>flyLocalSystem</B>, it inherits an orthonormal coordinate system and rotation matrix to be used as its orientation relative to the world; and from <B>flyBaseObject</B>, it inherits name and other entity identification properties. Every object implemented in the plugins that exists in the BSP must derive from <B>flyBspObject</B> and re-implement its <A HREF="virtualf.htm">virtual functions</A>. A complete list of the classes in this DLL can be found in the engine <A HREF="../../reference/main.html">reference documentation</A>.</P>
+<P>The <B>flyEngine</B> module also implements some general-use utility classes, like <B>flyString</B>, <B>flyArray</B> and <B>flyFile</B>. <B>flyString</B> is a variable-size string class, which auto-manages its memory space, implements concatenation, automatic char pointer conversion, character and substring search, comparison with another string, and much more. <B>flyArray</B> is a template variable-size array class, which also auto-manages its memory space, implementing insertion, deletion and indexation. <B>flyFile</B> is a file management class which handles binary and text files, implementing string, integer and floating point reading, fast profile reads (%s=%s type data), and also handles zip compressed data files allowing direct access without the need of extracting the data packs.</P></BODY>
+</HTML>

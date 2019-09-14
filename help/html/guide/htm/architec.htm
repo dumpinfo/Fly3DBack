@@ -1,0 +1,18 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Fly3D Guide - Software Architecture</TITLE>
+<META NAME="Template" CONTENT="D:\ARQUIVOS DE PROGRAMAS\MICROSOFT\OFFICE\html.dot">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</HEAD>
+<BODY TEXT="#000000" LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff">
+
+<H1>Software Architecture </H1>
+<P><IMG SRC="../img/architec.gif" WIDTH=539 HEIGHT=313></P>
+<P><BR>
+The Fly3D engine architecture reflects some main motivations that were taken into account when making the early design decisions for the software. The first of them is performance: highly related methods and classes were kept tightly close and accessible in the code, avoiding unnecessary levels of indirection to get the desired piece of data. On the other hand, classes and modules which need no knowledge of each other are kept separated, for the sake of portability, stability and code security.</P>
+<P>That explains the option of choosing C++ instead of standard C as the coding language, for the design approach shall take great advantage of the object-oriented paradigm present in C++. As a matter of fact, C++ is becoming the defacto standard in 3D games and applications programming, due to its efficiency, portability and depth as a language, and to the number of compilers available that can build really efficient assembly code out of it.</P>
+<P>Other fundamental factors that were considered are ease-of-use and extendability. For the engine to be as versatile as it actually ended up being, design decisions had to be made about how the user could extend the engine to implement a new functionality, and how to insert the engine into the development of a new game or application. The solution was adding plugin-orientation to the engine. With this new approach, it became simpler to add a new behaviour or feature to the software without having to re-compile it all over: just make a plugin DLL and link it to the engine's main library itself. Also, a new game or application can be developed as a plugin DLL linked to the engine, being able to use all the engine's interface classes, methods and variables.</P>
+<P>The back-end part of the software is divided into four modules: the mathematics library, the DirectX library, the rendering library and the engine library. Each of these modules are DLLs, and the first three are linked to the engine module, which is the one that integrates them into a powerful rendering and simulation tool.</P></BODY>
+</HTML>

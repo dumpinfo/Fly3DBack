@@ -1,0 +1,116 @@
+<html>
+<head>
+<title>Build Frontend: flyBuilder.exe</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>Build Frontend: flyBuilder.exe </h1>
+<p>The export module generates only raw data in the form of vertices and faces. 
+  This information needs further processing to generate the files used by the 
+  Fly3D Engine during the simulation. The <b>flyBuilder.exe</b> frontend is an 
+  application that loads vertices and faces data, together with a shaders file, 
+  and generates all the scene-related files necessary for Fly3D to play a level.</p>
+<p>Below is a figure of the application's main window:</p>
+<p><img src="../img/builder1.gif" width="347" height="399"></p>
+<p><b>flyBuilder.exe</b> has several options for building different parts of a 
+  Fly3D level data:</p>
+<ul>
+   <li><i>Map File</i> is the .fmp file where the vertices and faces data for the 
+    level is stored. The <i>Browse</i> button opens a dialog box for selecting an existing .fmp file;</li>
+	<li><i>Build BSP</i> enables building the .bsp file of the level. BSP stands 
+    for <i>Binary Space Partitioning</i>, an algorithm for dividing the scene 
+    space into convex volumes defined by the geometry faces. It is necessary to 
+    build a BSP file for the level to be viewable in Fly3D. But if you already 
+    have built a BSP before, and just wants to change, say, the illumination data, 
+    you do not need to build the BSP again. The BSP is divided into two parts, described below;</li>
+	<li><i>Phase 1: Axis-Aligned</i> performs axis-aligned space partitioning, which can be in one of two styles: Landscape or Freespace;  
+    can be disabled if your level is a closed one;</li>
+	<li><i>Landscape (2D)</i> performs axis-aligned space partition which considers only the X and Y axes. This makes the BSP building algorithm treat the scene as a landscape 
+    level, dividing the space with planes orthogonal to the landscape surface;</li>
+	<li><i>Freespace (3D)</i> performs axis-aligned space partition which considers the X, Y and Z axes. This makes the BSP building algorithm treat the scene as a freespace 
+    level, dividing the space like a cube being sliced in the 3 dimensions;</li>
+	<li><i>Phase 2: Face-Aligned</i> performs face-aligned space partitioning, which partitions the 3D space using  planes defined by the scene's structural faces. This option must be disabled for Landscape or Freespace levels;</li>
+	<li><i>Remove Negative Nodes</i> enables the deletion of negative (invalid) 
+    BSP nodes and any faces inside them. A well-modelled level should have no 
+    negative nodes, so in this case this option is inocuos. It must not be enabled 
+    for landscape levels;</li>
+	<li><i>Compute Visibility (PVS)</i> enables the building of visibility data files, 
+    such as .pvs and .fpt files. The .pvs file hold information about PVS culling, 
+    which critically optimizes the rendenring phase of the simulation. The .fpt 
+    file stores the portals that connect each pair of BSP nodes, and enables the 
+    use of Fly3D built-in path-finding methods;</li>
+	<li><i>Build Lighting</i> enabled the computation of vertex lighting and the building of lightmap files (.lmp), which 
+    store lighting information for all the faces in the scene;</li>
+	<li><i>Illuminate</i> tells the lighting algorithm to take 
+    the lights in the scene into consideration. Without this option, the lighmaps 
+    are generated with only the ambient light;</li>
+	<li><i>Radiosity</i> enables radiosity lighting computation, where the light 
+    sources can have an area (they do not need to be punctual). Light emmition 
+    is treated as energy, and all the faces filter and re-emmit the energy they 
+    receive, creating a far more real lighting effect;</li>
+	<li><i>Build FLY File</i> enables the building of Fly3D scene files (.fly), 
+    which store all the attributes of all the entities in the scene;</li>
+	<li><i>Class Template</i> is an option for choosing the pre-created entity template 
+    scheme that best suits the kind of scene you want to build. For example, &quot;ship&quot; 
+    templates already include the <i>ship</i> and <i>power-up</i> entities, while 
+    &quot;walk&quot; templates include <i>person</i> and <i>weapon</i> entities, 
+    etc.;</li>
+	<li><i>Run Frontend</i> tells <b>flyBuilder.exe</b> to run <b>flyFrontend.exe</b> 
+    after building the scene files, automatically opening the generated .fly file;</li>
+	<li><i>Pause After Build </i> tells <b>flyBuilder.exe</b> to pause after building, 
+    for the user to be able to see the reports of the build process in the build 
+    window;</li>
+</ul>
+<p>The <i>Options</i> button opens the <i>Advanced Options Dialog Box</i>, which 
+  contains several options for further customizing the build process. It is thoroughly 
+  described in the next section. The <i>Build</i> button initiates the build process, 
+  opening the build window. The <i>Exit</i> button closes the application without 
+  buiding. </p>
+<h3>The Advanced Options Dialog Box</h3>
+<p>Additional building options are available in the <i>Advanced Options Dialog 
+  Box</i>, shown below:</p>
+<p><img src="../img/builder2.gif" width="432" height="367"></p>
+<p>Here is a description of each option:</p>
+<ul>
+  <li><i>Ambient Light</i> defines the amount of ambient lighting in the scene 
+    as a whole;</li>
+  <li><i>Backface Culling</i> enables excluding faces that are opposed to the 
+    light ray direction from the lighting calculation;</li>
+  <li><i>Square Attenuation</i> enables the light to be attenuated with the square 
+    of the distance to the light source, as in the real world. Disabling this 
+    options makes light to attenuate with the distance alone;</li>
+  <li><i>LightDir dot Normal</i> enables the amount of light on a pixel to be 
+    multiplied by the dot product of the light direction and face normal vectors;</li>
+  <li><i>Max Passes</i> defines the maximum number of radiosity passes, i. e. 
+    the maximum number of times the whole scene will be scanned for emitting energy;</li>
+  <li><i>Min Energy</i> defines the minimum amount of total energy that needs 
+    to exist in the scene for a new radiosity pass to be performed. This means 
+    that, if at some point between passes in the radiosity calculation, the total 
+    amount of energy in the scene gets below this value, the process will end, 
+    not considering the little amount of energy left;</li>
+  <li><i>BSP Grid Size</i> represents the maximum size of a BSP sector. This enables 
+    the automatic splitting of volumes with dimensions bigger than this value.</li>
+  <li><i>PVS Grid Size</i> defines the maximum size of a PVS sector. Small PVS 
+    grid sizes provide more accurate PVS calculations at the cost of build speed;</li>
+  <li><i>Shadows</i> enable shadowing calculations;</li>
+  <li><i>Hard Shadows </i> creates jaggered shadows with sharp outlines;</li>
+  <li><i>Soft Shadows</i> creates better-looking shadows with rounded outlines 
+    and penumbra;</li>
+  <li><i>Light Samples</i> defines the number of penumbra levels, including the 
+    total shadow level;</li>
+  <li><i>Light Jittering</i> defines the distance between the light samples, and 
+    determines the width of each penumbra layer;</li>
+  <li><i>Lightmap Size </i>defines the light map texture size in pixels;</li>
+  <li><i>Lightmap Pixel Size</i> determine how many scene units are represented 
+    in a light map pixel;</li>
+  <li><i>Exposure</i> determines the exposure time of the lightmap to the light 
+    sources; the more, the brigther;</li>
+  <li><i>Compress Lightmaps</i> enables light maps JPEG compression, gaining in 
+    light maps size with loss in quality;</li>
+  <li><i>Lightmap Quality</i> defines the quality of the compressed lightmap, 
+    as a percent value relative to the original light map.</li>
+</ul>
+</body>
+</html>

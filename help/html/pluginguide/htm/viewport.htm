@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>A matter of points-of-view: using the 'viewport' class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>A matter of points-of-view: using the 'viewport' class </h1>
+<p>A viewport is a window that renders the simulation viewed from a point diverse 
+  of the default camera view. It can be used as a rear view mirror in vehicle 
+  simulations or to render the view of any BSP object in a window on the screen.</p>
+<p>The <b>viewport.dll </b>standard plugin provides the <b>viewport</b> class, 
+  which implements everything needed for using a viewport in a custom plugin or 
+  application. The class has member variables to store the relative position and 
+  size of the window inside the screen space, as well as a on/off flag.</p>
+<p>Adding a viewport to a custom class is simple. Firstly, a pointer to a <b>viewport</b> 
+  object must be added to the class definition, like in the following example:</p>
+<p class='code'>#include &quot;c:\fly3d\plugin\viewport\viewport.h&quot;<br>
+  <br>
+  class myclass : public flyBspObject<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;viewport *vp;<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;myclass();<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;void init();<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;int step(int dt);<br>
+  };</p>
+<p>When the object is activated, its corresponding <b>viewport</b> must be initialized 
+  and set to render the view of the object; it must also be turned on. In this 
+  simple example, these tasks are performed in the custom class' <b>init</b> method, 
+  which is called by the engine when activating the object:</p>
+<p class='code'>void myclass::init()<br>
+  { <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;if(vp)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vp-&gt;target=this;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vp-&gt;on=1; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;} <br>
+  }</p>
+<p>When the object is destroyed or dies, and has to be taken out of the simulation, 
+  it must first turn off its <b>viewport</b> instance. In this example, this is 
+  done in the custom class' <b>step</b> function:</p>
+<p class='code'>int myclass::step(int dt)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;if(life&lt;0 &amp;&amp; vp &amp;&amp; vp-&gt;target==this)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vp-&gt;target=0;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;vp-&gt;on=0; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;} <br>
+  }</p>
+</body>
+</html>

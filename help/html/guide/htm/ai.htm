@@ -1,0 +1,37 @@
+<html>
+<head>
+<title>Fly3D Guide - AI and path-finding</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>AI and path-finding</h1>
+<p>Artificial Intelligence plays a major role in a game. Intelligent opponents 
+  are no news to pc gamers, but AI is finding its way into other kinds of 3D applications 
+  as well. Therefore, Fly3D engine offers the basic structures and methods which 
+  we need to build an AI engine for our application.</p>
+<p>The lowest level of 3D games' AI consists in the ability to find a path between 
+  two points in the 3D environment, or simply <b>path-finding</b>. Fly3D offers 
+  a path-finding routine in the <b>flyEngine</b> class (accessible via the <b>g_flyengine</b> 
+  global variable), described below:</p>
+<h3>find_path</h3>
+<p class="code">int find_path(const flyVector &amp;source,const flyVector &amp;sourcedir,float 
+  sourceradius,const flyVector &amp;dest,flyBezierCurve &amp;curve)</p>
+<p>This function finds a path from the position <b>source</b> to the position 
+  <b>dest</b>, given in 3D space. <b>sourcedir</b> is a normal vector indicating 
+  the direction which the object is facing, and <b>sourceradius</b> is the radius 
+  of the source object, used to build a path that does not make the object hit 
+  a wall. The resulting path is stored in the parameter <b>curve</b>, which is 
+  a Bezier curve in 3D space. The function uses the <b>A* algorithm</b>, with 
+  the convex volumes formed by the BSP as states. This way, the generated path 
+  does not hit any walls. Furthermore, the path is smoothed, by having unnecessary 
+  waypoints taken out and by applying a curve transformation to it. The <b>find_path</b> 
+  function returns 1 if there is a path between the two points, 0 otherwise.</p>
+<p>At a higher level, AI must handle behaviours. In this phase, AI engineers often 
+  choose to use a structure called <b>Finite State Machine</b> (FSM). Fly3D offers 
+  a generic FSM class called <b>flyStateMachine</b> in the Engine module. It includes 
+  states, inputs, an array of transition rules, methods for transition, and much 
+  more.</p>
+</body>
+</html>

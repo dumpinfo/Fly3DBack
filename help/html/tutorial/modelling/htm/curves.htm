@@ -1,0 +1,88 @@
+<html>
+<head>
+<title>Modelling with curves</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>Modelling with curves</h1>
+<p>This tutorial explains how to build curves in 3D Studio MAX for Fly3D. These 
+  are special types of curves, and the curve object plugin was created specifically 
+  for making curves that integrate with Fly3D and take advantage of the engine's 
+  dynamic LOD algorithms and other optimizations.</p>
+<h3>Step 1: Creating a structure</h3>
+<p>- In this step, a big box will be created and used as structure, which will 
+  represent the level itself and will contain the curves to be exported on the 
+  end of the tutorial.<br>
+  - A box is created in our simple example with dimensions 1000x1000x400, as seen 
+  below:<br>
+	<img src="../img/flycurve01.jpg" width="356" height="257"><img src="../img/flycurve02.jpg" width="159" height="162" align="top"></p>
+<h3>Step 2: Inverting the normals</h3>
+<p>- Now the box's normals should be inverted, making the inside space valid, 
+  and the outside, invalid. Also, a '*' (asterisk) character must be added to 
+  the beginning of the box's name (in our case, <i>structure</i>), so that the 
+  export plugin will later recognize it as the level's structure.<br>
+	<img src="../img/flycurve03.jpg" width="356" height="257"></p>
+<h3>Step 3: Mapping</h3>
+<p>- In this step, the box will be texturized for a better look, which is completely 
+  optional.<br>
+	<img src="../img/flycurve04.jpg" width="356" height="257"></p>
+<h3>Step 4: Creating curves</h3>
+<p>- The Fly3D curve creation plugin is found inside the <i>Create/Geometry</i> 
+  menu, in the <i>Paralelo</i> category.<br>
+  - Clicking on the <i>flycurve</i> button, various curve types will will be available, 
+  like cylinders, cones, spheres, caps, etc. Also, some options are available 
+  like the dimensions and number os segments of the curve.<br>
+  - Firstly, a cylinder will be created as a <i>Full</i> one (<i>4x1</i> segments), 
+  positioned at the center of the room, with dimensions set at 50x50x200.<br>
+	<img src="../img/flycurve05.jpg" width="356" height="257" align="bottom"><img src="../img/flycurve06.jpg" width="157" height="295" align="top"><br>
+  - Now a quarter-sphere will be created, positioned anywhere in the room. A quarter-sphere 
+  is created by selecting <i>hemisphere</i> in the <i>type</i> menu, and then 
+  <i>Quarter (1x1)</i> in the <i>Segments</i> menu. Its dimensions will be 200x200x100, 
+  as seen in the figure below:<br>
+	<img src="../img/flycurve07.jpg" width="356" height="257" align="bottom">
+	<img src="../img/flycurve08.jpg" width="158" height="289" align="top"><br>
+	<br>
+  - This time, another kind of curve will be created. In the <i>type</i> menu, 
+  the <i>Cone</i> option will be selected, and a <i>Full (4x1)</i> cone will be 
+  created, with dimensions 50x50x100 and posicioned against the wall, as seen 
+  in the figure below:<br>
+	<img src="../img/flycurve09.jpg" width="356" height="257">
+	<img src="../img/flycurve10.jpg" width="154" height="289" align="top"><br>
+	<br>
+  - The next step is to make a capped thin half-cylinder. First, the body of a 
+  half-cylinder must be created with dimensions set to 200x200x20.<br>
+	<img src="../img/flycurve11.jpg" width="356" height="257">
+<img src="../img/flycurve12.jpg" width="156" height="289" align="top"></p>
+<p>- Now the cylinder must be cloned and placed on the same position, but this 
+  time the <i>Cap Up</i> option of the <i>Part</i> menu must be used to make a 
+  cap for the cylinder, as seen below:<br>
+  <img src="../img/flycurve13.jpg" width="356" height="257"> <img src="../img/flycurve14.jpg" width="151" height="78" align="top"><br>
+</p>
+<h3>Step 5: Editing the curves</h3>
+<p></p>
+<p>- In this step, another cylinder will be created, and the <i>Edit Mesh</i> 
+  modifier will be applied to it afterwards, making it possible to move the curve's 
+  vetices. A <i>Full (4x1)</i> cylinder will be created, and the <i>Part</i> menu 
+  must be set to <i>Body</i>.<br>
+  - The <i>Edit Mesh</i> modifier is then applied, and the vertices are edited 
+  to make it for a curved cylinder. Note that, once the modifier is applied, the 
+  curve is no more visible; its control points appear instead. The vertices we 
+  move are actually the curve's control points, but in Fly3D it will still be 
+  seen as a curve.<br>
+  <i><img src="../img/flycurve15.jpg" width="356" height="257"></i></p>
+<p>- This last curve will be another cylinder (a quarter-cylinder, actually), 
+  but this time we will set the <i>Invert Normals</i> option to make a rounded 
+  corner. This quarter-cylinder will have dimensions of 200x200x200.<br>
+	<img src="../img/flycurve17.jpg" width="356" height="257"></p>
+<h3>Step 6: Illuminating, adding entities and exporting</h3>
+<p>- In this last step, lights and a birthpad are positioned in the level.<br>
+	<img src="../img/flycurve16.jpg" width="356" height="257"><br>
+  - Export it as a Fly3D Map file (.fmp), build the level with flyBuilder and 
+  run one of the engine's front-ends to see the level. Here are some screenshots 
+  from the level in Fly3D:<br>
+	<img src="../img/flycurve_ss1.jpg" width="280" height="200"><img src="../img/flycurve_ss2.jpg" width="280" height="201"><br>
+	<img src="../img/flycurve_ss3.jpg" width="280" height="201" align="absmiddle"><img src="../img/flycurve_ss4.jpg" width="280" height="201" align="top"></p>
+</body>
+</html>

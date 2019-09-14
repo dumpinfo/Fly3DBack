@@ -1,0 +1,31 @@
+<html>
+<head>
+<title>Fly3D Guide - DirectX module: flyDirectx</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>DirectX module: flyDirectx </h1>
+<p><img src="../img/directx.gif" width="167" height="204"></p>
+<p><b>flyDirectX</b> is a DLL that works as an interface between the DirectX API 
+  and Fly3D. It is the only module that has access to the data structures and 
+  operations provided by DirectX. The library implements classes that deal with 
+  input, sound and multiplayer gaming. </p>
+<p>The main class of the library is the <b>flyDirectx</b> class, and a global 
+  instance of that class, <b>g_flydirectx</b>, is available. Through <b>g_flydirectx</b>, 
+  we can check for input from the keyboard or mouse, add a new sound to the simulation, 
+  access multiplayer information, join and create multiplayer games, and so forth. 
+  The <b>g_flydirectx</b> variable is declared in flyDirectX.h as follows: </p>
+<p class="code"> // global flyDirectx instance<br>
+  extern FLY_DIRECTX_API flyDirectx *g_flydirectx;</p>
+<p>Please note that the coherence of the <b>g_flydirectx</b> variable is conditioned 
+  to the use of two functions, <b>fly_init_diretcx</b> and <b>fly_free_directx</b>, 
+  before the simulation starts and after it finishes, respectively. These two 
+  functions are declared in flyDirectX.h as follows:</p>
+<p class="code">// global DirectX initialisation method<br>
+  FLY_DIRECTX_API void fly_init_directx(HWND hwnd,HINSTANCE hinst);<br>
+  // global DirectX release method<br>
+  FLY_DIRECTX_API void fly_free_directx(); </p>
+</body>
+</html>

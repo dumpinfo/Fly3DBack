@@ -1,0 +1,10 @@
+NAME            FFT-1D
+EXETYPE         WINDOWS
+
+DESCRIPTION     'The Computer Image - FFT 1D'
+
+CODE            PRELOAD MOVABLE
+DATA            PRELOAD MOVABLE MULTIPLE
+
+HEAPSIZE        2048
+STACKSIZE       8192

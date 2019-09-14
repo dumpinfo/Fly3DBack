@@ -1,0 +1,34 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Fly3D Guide - Collision detection</TITLE>
+<META NAME="Template" CONTENT="D:\ARQUIVOS DE PROGRAMAS\MICROSOFT\OFFICE\html.dot">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</HEAD>
+<BODY TEXT="#000000" LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff">
+
+<H1>Collision detection</H1>
+<P>Collision detection is the act of detecting that two objects intersect or "touch" each other. It is a crucial step in physically-based simulation. It is a separate task from collision response, which is the act of taking some providence given the fact that two objects collide, and is an application-dependant routine. </P>
+<P>Fly3D engine offers 2 general-usage collision methods, accessed via the global variable <B>g_flyengine</B>: </P>
+<h3>collision_bsp</h3>
+<P class="code">int collision_bsp(const flyVector&amp; p1,const flyVector&amp; 
+  p2,int elemtype)</P>
+<P>This function computes the closest collision between the 3D-space points <B>p1</B> and <B>p2</B>, assigning values to the engine variables <B>hitobj</B> (the object that was hit), <B>hitmesh</B> (the mesh that was hit), <B>hitip</B> (the exact 3D-space point of intersection),<B> hitdist</B> (the distance from <B>p1 </B>to the collision point),<B> hitface</B> (the face where the collision occured), <B>hitsubface</B> (triangular hit face, in the case that <B>hitface</B> is a compound face),<B> hitnormal</B> (the direction of reflection) and <B>hitshader</B> (shader applied to the hit face). The <B>elemtype</B> parameter can be used to restrict the collision to a given type of object, or can be ommited for no restriction. This function returns 0 for no collisions, 1 for collision.</P>
+<h3>collision_test</h3>
+<P class="code">int collision_test(const flyVector&amp; p1,const flyVector&amp; 
+  p2,int elemtype)</P>
+<P>This function returns once it finds a collision between <B>p1</B> and <B>p2</B>. It is much quicker than <B>collision_bsp</B>, but serves just to test for collisions, not computing the variables mentioned in the above function. The <B>elemtype</B> parameter is the same as in <B>collision_bsp</B>. This function returns 0 for no collisions, 1 for collision.</P>
+<P>For moving objects, Fly3D offers a different collision method in the <B>flyBspObject</B> class, and this function behaves differently depending on the value of the object's <B>collide</B> variable (inherited from <B>flyBspObject</B>):</P>
+<h3>box_collision</h3>
+<P class="code">int box_collision(flyVector&amp; destpos,flyVector&amp; destvel,int 
+  maxcol)</P>
+<P>The <B>destpos</B> and <B>destvel</B> parameters are vectors that contain the desired destination position and velocity of the moving object. <B>maxcol </B>is the maximum number of collisions to be computed, and the default value is 3.<B> box_collision</B> will automatically change the value of these parameters if it finds a collision, reflecting the object according to its <B>bump</B> and <B>friction</B> values (for more on these, see below). The basic behaviour of <B>box_collision</B> depends on the <B>collide</B> variable value: if 0, no collision is computed and the functions returns immediately; if 1, collision is computed using the object's axis-aligned bounding box, which is REALLY fast and acceptable in many applications; if 2, collision is computed using the object's mesh itself, which can be very expensive, depending on the mesh's complexity. This function returns 0 for no collisions, 1 for collision.</P>
+<P>Fly3D also offers particle-like collision response, that is, an object can 
+  collide on walls and bump like a particle. To do so, we must assign proper values 
+  to the <B>bump</B>, <B>friction</B> and <B>colflag</B> variables of the object 
+  (it inherits them from the <B>flyParticle</B> class), in this manner:</P>
+<P><B>bump</b> is a floating point value between 0 and 1. It represents the bump factor of the object's surface material (0 for completely inelastic collision, 1 for perfectly elastic collision).</P>
+<P><B>friction</b> is also a floating point value between 0 and 1. It represents the friction factor of the object's surface material upon colliding with walls (0 for infinite friction, 1 for no friction).</P>
+<P><B>colflag</b> is an integer variable. Assign 0 for no collision or 1 for collision. It can also assume the special value 3, meaning that this object must die upon colliding for the first time.</P></BODY>
+</HTML>

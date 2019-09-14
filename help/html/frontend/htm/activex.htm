@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>ActiveX Control: fly3d.ocx</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>ActiveX Control: fly3d.ocx </h1>
+<p>Fly3D SDK 2.0 also features an ActiveX control with the whole engine functionality 
+  that can be inserted into web pages, running in an Internet browser. <b>fly3d.ocx</b> 
+  is powerful and easy to use, providing methods for loading the desired scene 
+  file, downloading additional data or resource files, and much more.</p>
+<p>The methods provided by the control are the following:</p>
+<p class="code">Open(VT_BSTR fly_file)<br>
+  OpenURL(VT_BSTR zip_url) <br>
+  Run()<br>
+  Stop()<br>
+  Exec(VT_BSTR command)<br>
+  AboutBox()</p>
+<p>The <i>Open</i> method loads a scene file (.fly) found in the current ocx data 
+  folder (usually '\program files\fly3d\data\'). The <i>fly_file</i> parameter 
+  is the name of the file, relative to the data folder.</p>
+<p>The <i>OpenURL</i> method receives an URL for a .zip file to be downloaded 
+  and executed. The URL can be relative or absolute, using http or ftp. It can 
+  also be a local file. The zip file is downloaded and extracted to the ocx installation 
+  path for execution.</p>
+<p>The <i>Run</i> and <i>Stop</i> methods tell the control to start and stop the 
+  simulation, respectively. These methods need no parameters at all and will load/unload 
+  the currect selected .fly file.</p>
+<p>The <i>Exec</i> method can execute a generic command, given by its string parameter.</p>
+<p>Finally, the <i>AboutBox</i> method displays a dialog box with information 
+  regarding the ActiveX control.</p>
+<p><b>fly3d.ocx</b> also features a message system for Fly3D plugins to ask for 
+  the download of resources they need. The plugin just needs to call the <i>SendMessage</i> 
+  Windows function, as exemplified below:</p>
+<p class="code"> char str[256];<br>
+  strcpy(str,name);<br>
+  strcat(str,&quot;,&quot;);<br>
+  strcat(str,file);<br>
+  <br>
+  SendMessage(g_flyengine-&gt;hwnd,WM_USER+1,0,(LPARAM)str);</p>
+<p>In this example, <i>str</i> is a concatenation of the object's name, a comma, 
+  and the file name of the resource to be downloaded. The ActiveX control will 
+  search for the specified resource file in the download path URL provided by 
+  the <i>Open</i> method executed most recently. The first parameter of <i>SendMessage</i> 
+  is the handle of Fly3D current window, which is the handler to the ActiveX when 
+  it is running. The second parameter is the message identifier, which was defined 
+  in the ActiveX control code as <i>WM_USER + 1</i>.</p>
+</body>
+</html>

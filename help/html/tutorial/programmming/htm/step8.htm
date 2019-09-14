@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>Programming Tutorial - Step 8</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>8. Adding new member variables to the plugin classes </h1>
+<p>In this step, the addition of members to existing classes in the plugin will 
+  be exemplified. A new variable will be added to the 'object' class: the mesh 
+  color.`</p>
+<p>Firstly, the variable must be added to the 'object' class definition in the 
+  <font size="-1"> <font face="Courier"> .h</font></font> file. The following 
+  line should be inserted:</p>
+<p class="code"> flyVector color;</p>
+<p>The <b>flyVector </b>class defines a 4-component vector of floating point numbers. 
+  Our color will be represented by the <b>x</b>, <b>y</b> and <b>z </b>components 
+  of the vector, while the <b>w</b> component will be used to represent transparency 
+  (0..1, 0 for fully transparent, 1 for fully opaque).</p>
+<p>For these values to be exported and edited in the front-ends, the variables 
+  must be enumerated in the <b>get_custom_param_desc</b> method. The code for 
+  this method, after these additions, is as follows:</p>
+<p class="code">int object::get_custom_param_desc(int i,flyParamDesc *pd)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;if (pd!=0)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;switch(i)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 
+  0:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;type='m';<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;data=&amp;objmesh;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;name=&quot;objmesh&quot;;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 
+  1:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;type='c';<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;data=&amp;color;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;name=&quot;color&quot;;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;case 
+  2:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;type='f';<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;data=&amp;color.w;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;name=&quot;transp&quot;;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp; return 3;<br>
+  }</p>
+<p>Note that the 'c' data type represents colors; <b>flyEditor</b> will open a 
+  color browsing dialog box upon editing this type of parameter. For the transparency 
+  variable, a standard floating point editing box will be used.</p>
+<p>Now that the mesh color can be edited outside the plugin, it must be assigned 
+  to the object's mesh color. The <b>flyMesh</b> class has a <b>color</b> member 
+  variable to which the color parameter of the object will be set. This will be 
+  done in the object's <b>init </b>method, as seen below:</p>
+<p class="code">void object::init()<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;if(objmesh)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;bbox=objmesh-&gt;bbox;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;objmesh-&gt;color=color;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+  }</p>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>Leaving a trail behind: using the 'followpath' class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>Leaving a trail behind: using the 'followpath' class </h1>
+<p>The follow path is an astonishing effect that amplifies the feeling of rapid 
+  movement and adds dynamics to the simulation. It was used, for example, as a 
+  trail effect in the <b>ship</b> object's afterburner and in some of the ship's 
+  laser guns.</p>
+<p>The <b>gamelib.dll</b> standard plugin includes the <b>followpath</b> class 
+  which implements the trail effect. It has member variables like a color, a texture 
+  to be applied on the trail, fade time, duration and delay between segments.</p>
+<p>Using the <b>followpath </b>class in a custom class is simple. First of all, 
+  two pointers to <b>followpath</b> objects must be declared in the custom class 
+  definition: one to keep the original settings for the path and another to maintain 
+  the current path being used. An example of these declarations in a single class 
+  is as follows: </p>
+<p class='code'>#include &quot;c:\fly3d\plugin\gamelib\followpath.h&quot;<br>
+  <br>
+  class myclass : public flyBspObject<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;followpath *path, *cur_path;<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;myclass();<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;int step(int dt);<br>
+  };</p>
+<p>In the class' <b>step</b> function, the trail is put into action. Firstly, 
+  it is needed to check if the original path is valid and if it is to be placed 
+  in the simulation in the current frame (the current path pointer is null) or 
+  is already simulating (the current path pointer is valid). If it does not exist 
+  yet, the original path is cloned and the new object is assigned to the 'current 
+  path' pointer. The current path is then positioned and activated (being added 
+  to the BSP tree and the simulation). All of this is exemplified in the code 
+  excerpt below:</p>
+<p class='code'>if(path)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;if(cur_path==0)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cur_path=(followpath *)path-&gt;clone();<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cur_path-&gt;pos=pos;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g_flyengine-&gt;activate(cur_path); 
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;} </p>
+<p>Next, it is needed to check if the elapsed time since the last path segment 
+  was released is above the <b>followpath</b> segment delay value: if it is so, 
+  a new segment must be added to the trail, the 'current path' variables must 
+  be updated; if not, the position of the current active segment must be updated 
+  with the new position of the carrier object (the one that is generating the 
+  trail). An example is as follows:</p>
+<p class='code'>if(g_flyengine-&gt;cur_time-cur_path-&gt;last_time&gt;cur_path-&gt;delay)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;cur_path-&gt;last_time=g_flyengine-&gt;cur_time;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;cur_path-&gt;time.add(g_flyengine-&gt;cur_time);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;cur_path-&gt;path.add(pos);<br>
+  }<br>
+  else if(cur_path-&gt;path.num)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;cur_path-&gt;path[cur_path-&gt;path.num-1]=pos;
+</p>
+<p>Finally, the step function of the custom class, as a whole, should look like 
+  this: </p>
+<p class='code'>int myclass::step(int dt)<br>
+  { <br>
+  &nbsp;&nbsp;&nbsp;if(path)<br>
+  &nbsp;&nbsp;&nbsp;{ <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(cur_path==0)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cur_path=(followpath 
+  *)path-&gt;clone();<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cur_path-&gt;pos=pos;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g_flyengine-&gt;activate(cur_path); 
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if(g_flyengine-&gt;cur_time-cur_path-&gt;last_time&gt;cur_path-&gt;delay)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;{<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cur_path-&gt;last_time=g_flyengine-&gt;cur_time;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cur_path-&gt;time.add(g_flyengine-&gt;cur_time);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cur_path-&gt;path.add(pos);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;else if(cur_path-&gt;path.num)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;cur_path-&gt;path[cur_path-&gt;path.num-1]=pos;<br>
+  &nbsp;&nbsp;&nbsp;}<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;return 1;<br>
+  } </p>
+</body>
+</html>

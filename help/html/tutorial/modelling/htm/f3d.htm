@@ -1,0 +1,152 @@
+<html>
+<head>
+<title>Importing and Exporting a .f3d file</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>F3D Export Tutorial</h1>
+<h3>Introduction</h3>
+<p>The goal of this tutorial is to show how to use the F3D mesh export plugin 
+  for 3D Studio MAX, featured in the Fly3D 2.0 engine. The example F3D mesh will 
+  contain 1 static frame and 2 animations of the same object, one of them done 
+  by use of fundamental operations (like translation, rotation and scaling), and 
+  the other done by moving the vertices of the object. It is necessary to have 
+  3D Studio MAX versions 3.x or 4.x up and running, with the Fly3D MAX plugins 
+  properly installed, for the development of this tutorial and for the use of 
+  the F3D export plugin.</p>
+<h3>Step 1: Creating an Object</h3>
+<p>- In this step, a new object must be created from scratch (in this case a simple 
+  box);</p>
+<p><img src="../img/texp01.jpg" width="184" height="244"></p>
+<p>- Since there will be no animation in the first object, it is almost ready 
+  for exporting.<br>
+  <img src="../img/texp02.jpg" width="422" height="285"> <br>
+	</p>
+<h3>Step 2: Mapping the Object<br>
+	</h3>
+<p>- A texture is applied and the object is mapped. When exporting, the mapping 
+  will be saved and a shader file (.shr) will be created.<br>
+  <img src="../img/texp04.jpg" width="420" height="285"> </p>
+<h3>Step 3: Exporting the Static Object</h3>
+<p>- In the File/Export menu option, save the file in the data/objects/ folder 
+  inside Fly3D installation path and the following dialog box will be shown:<br>
+  <img src="../img/texp03.jpg" width="355" height="334"> <br>
+  - In it, check the <i>Save Shader File (.shr)</i> check box, which will save 
+  a shaders file that can be edited later in the FlyShader program. In this step, 
+  since the object has no animations, the <i>Save animation</i> option must be 
+  off.<br>
+	</p>
+<h3>Step 4: Editing the Shaders</h3>
+<p>- In this step, the object's shader is edited as desired, so that we do not 
+  need to save it again later (doing that would overwrite the modified .shr file, 
+  and all edition would be lost);<br>
+  - In the Shader Editor (flyShader.exe), a chrome is applied over the object 
+  (as seen below), using envoironment mapping and a chrome texture.<br>
+  <img src="../img/texp05.jpg" width="412" height="362"> </p>
+<h3>Step 5: Linear Animation</h3>
+<p>- In this step, linear transformations are added to the object, like translations 
+  and rotations;<br>
+  - The number of animation keys is the same as the number of frames defined in 
+  MAX. For example, for a simple door object, just two frames would be needed 
+  (open and closed), since the engine automatically interpolates between these 
+  two frames during the simulation.<br>
+  - In this case, the animation features a little more frames (10) for better 
+  visualization, as seen below:<br>
+  <img src="../img/texp04.jpg" width="420" height="285"> <img src="../img/texp07.jpg" width="419" height="285"><br>
+	     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Frame 0)  							 	  	   	      		                                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Frame 3)<br>
+  <img src="../img/texp08.jpg" width="419" height="283"> <img src="../img/texp09.jpg" width="418" height="282"><br>
+	                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Frame 7)   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Frame 10)<br>
+	<br>
+  - In the File/Export option again, we will add this animation to the existing 
+  file, selecting the <i>Append to existing file</i> option; this way, more than 
+  one animation can fit a single .F3D file;<br>
+  - Also, the <i>Save Animation</i> option must be turned on, and a name must 
+  be given to the animation<i> </i>(in the <i>Anim Name</i> edit box); we called 
+  our animation <i>linear</i>;<br>
+  - In the export dialog box, you can see information like the number of vertices, 
+  materials, the number of frames in each animation and the total number of keys 
+  in all animations;<br>
+  - It is not necesary to save a new shader file, unles you wish to overwrite 
+  the old one.<br>
+  <img src="../img/texp06.jpg" width="353" height="334"> <br>
+	</p>
+<h3>Step 6: Animating Vertices</h3>
+<p>- In this step, another animation will be built, but this time the vertices 
+  will be moved. This animation will be appended to the old .f3d file;<br>
+  <img src="../img/texp10.jpg" width="231" height="163"><img src="../img/texp11.jpg" width="231" height="163"><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+  &nbsp;&nbsp;&nbsp;&nbsp;(Frame 0)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Frame 
+  3)<br>
+  <img src="../img/texp12.jpg" width="233" height="158"> <img src="../img/texp13.jpg" width="235" height="158"><br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+  &nbsp;&nbsp;&nbsp;(Frame 7)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Frame 
+  10) <br>
+</p>
+<p>- After moving the vertices in the 10 frames and calling the export option, 
+  the animation must be added to the existing file by turning on the<i> Append 
+  to existing file</i> option;<br>
+  - Turn on the <i>Save Animation</i> option and name the animation (we called 
+  this one <i>vertex</i>);<br>
+  - Remeber not to save a shader file unless you want to overwrite the old one;<br>
+  <img src="../img/texp14.jpg" width="354" height="334"><br>
+  <br>
+  - All done! Now the object is ready to be used in Fly3D;<br>
+  - To see your object animating, open the saved .f3d file in the Shader Editor. 
+  If more than one animation exists in the file (like in our simple example), 
+  double click with the right mouse button to change the animation.</p>
+<h1>F3D Import Tutorial</h1>
+<h3>Introduction</h3>
+<p></p>
+The goal of this tutorial is to show how to use the F3D mesh export plugin for 
+3D Studio MAX, featured in the Fly3D 2.0 engine. A F3D file containing an animated 
+mesh object will be imported to 3D Studio MAX 3.x or 4.x.
+<h3> Importing Animations as Separated Meshes</h3>
+<p>- Use the <i>File/Import</i> menu option in 3D Studio MAX and choose the F3D 
+  file to be imported. The following dialog box will show up:<br>
+	</p>
+<p><img src="../img/timp01.jpg" width="240" height="205"><br>
+	<br>
+  - There are two import options: one for importing each animation into a separate 
+  object, and another to import all animations into a single object. The first 
+  one is the default option.<br>
+  - This tutorial uses the soldier.f3d object from Fly3D Walk Demo (walk.zip). 
+  This mesh consists of a series of animations featuring the Bronto character 
+  walking, jumping, swimming, etc.;<br>
+  - When it is imported with the default option, all animations will be separated 
+  into different objects, generating a smaller number of frames, where this number 
+  will be given by the frames of the longest animation. All the objects are centralized 
+  on the same point, making it difficult to visualize:<br>
+	<img src="../img/timp03.jpg" width="431" height="293">
+	<br>
+  - Here the objects are separated:<br>
+	<img src="../img/timp02.jpg" width="430" height="304"><br>
+  - Each mesh animates separately, and if there is any static object in the file, 
+  it will also be imported as a separated 1-frame mesh</p>
+<h3>Importing Several Animations into a Single Mesh</h3>
+<p>- The soldier.f3d file will be imported again, but this time the second import 
+  option will be used, and all animations will be imported to a single object;<br>
+  <br>
+  <img src="../img/timp04.jpg" width="240" height="206"><br>
+  <br>
+  - In this option, the number of frames will be much bigger, since the animations 
+  will be appended together as a sequence in the single object created;<br>
+  - When import to a single object is performed, some parameters are added to 
+  the object's <i>User-Defined Properties</i>, informing the number of frames 
+  and the name of each animation, formatted as follows:<br>
+  <br>
+  <i><b>&nbsp;subanim = n0:animname0,n1:animname1,n2:animname2,n3:animname3...<br>
+  </b></i></p>
+<p>- <i>subanim</i> is the name of the parameter; <i>ni</i> is the number of frames 
+  in the <i>i</i>-th animation; and <i>animnamei</i> is the name of the <i>i</i>-th 
+  animation. This parameter can be viewed in the mesh properties box (right-click 
+  on the object and select <i>Properties/User Defined</i>):<br>
+  <img src="../img/timp05.jpg" width="405" height="314"><br>
+  - If the object is re-exported, the plugin will detect these settings and save 
+  the F3D file with separate animations again;<br>
+  - The <i>Save Animation</i> option is disabled as the animations will be automatically 
+  saved;<br>
+  <img src="../img/timp06.jpg" width="354" height="335"> <br>
+  - All done! Now you can re-import a pre-made object to MAX, modify it and re-export 
+  it.</p>

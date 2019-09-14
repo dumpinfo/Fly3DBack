@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>Lights on: using the 'light' class</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>Lights on: using the 'light' class</h1>
+<p>Lights and lighting effects undoubtedly add depth and ambience to a graphic 
+  presentation. And it is often desired that an object has or deals with a light 
+  emmiter, be it a missile that carries a light spot or a lamp that illuminates 
+  a room.</p>
+<p>Fly3D provides a pre-made class that allows an object to carry a light spot: 
+  the <b>light</b> class in the <b>lights.dll</b> standard plugin. It implements 
+  a basic light emmiting entity that draws itself and illuminates the space around 
+  it and inside its illumination radius. The light object can be of any color 
+  and can also have a halo texture.</p>
+<p>Using the <b>light</b> class in a custom plugin or application is very simple: 
+  firstly, add a pointer to a <b>light</b> object in the desired class. Note that 
+  this light object is a stock object, not an active one. An example is given 
+  below: </p>
+<p class='code'>#include &quot;c:\fly3d\plugin\lights\lights.h&quot;<br>
+  <br>
+  class myclass : public flyBspObject<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;light *l;<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;myclass();<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;int step(int dt);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;void draw();<br>
+  };</p>
+<p>Next, the <b>step</b> function of the class must be written as to position 
+  the light object, change its parameters if desired (maybe for making the light 
+  glow or change colors) and call the light object's <b>step</b> function, which 
+  will make it illuminate everything around it and in its radius. A simple example 
+  is shown below:</p>
+<p class='code'>int myclass::step(int dt)<br>
+  { <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;l-&gt;pos=pos;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;l-&gt;step(dt);<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;return 1;<br>
+  }</p>
+<p>Finally, the <b>draw</b> function, which is called when the engine requires 
+  the object to draw itself, should reposition the light and re-set the parameters, 
+  calling the light object's <b>draw </b>function afterwards. This will make the 
+  light actually be seen on screen as a halo, if a texture is set to it. An example 
+  of a simple class' <b>draw</b> function is below:</p>
+<p class='code'>void myclass::draw()<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp; l-&gt;pos=pos;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;l-&gt;draw(); <br>
+  }</p>
+<p>An important note must be considered: since a pointer to a light object is 
+  added to the class as a member variable, all instances of the class will share 
+  the same light object. That is the reason why the light should be repositioned 
+  and re-set in the <b>draw</b> function: because the <b>step</b> function of 
+  all the objects are called by the engine before the <b>draw</b> function is 
+  called.</p>
+</body>
+</html>

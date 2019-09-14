@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Modelling, exporting and building the simplest level ever</title>
+<meta http-equiv=Content-Type content="text/html; charset=iso-8859-1"><link 
+href="../../../fly-refes.css" 
+type=text/css rel=stylesheet>
+<meta content="MSHTML 6.00.2600.0" name=GENERATOR></head>
+<body text=#000000 bgcolor=#ffffff>
+<h1>Modelling, exporting and building the simplest level ever</h1>
+<p>This tutorial explains how to build a structure that is the most basic possible, 
+  and to include one example of each detail object types supported by Fly3D (vertex-lightened 
+  triangular objects, lightmap-lightened polygonal objects and curve objects). 
+  3D Studio MAX 3.x or 4.x can be used as modelling tools. The user must have 
+  basic knowledge of this software. Fly3D export/import plugins and curve plugin 
+  for the corresponding MAX version must be installed through the Fly3D Plugins 
+  Installation Program (<b>flyInstPlugins.exe</b>) application. </p>
+<h3>Building the Level's Structural Faces </h3>
+<p>- Structural faces are the ones that define the geometry of the scene, dividing 
+  the space between &quot;in&quot; and &quot;out&quot; of the environment, like 
+  walls, ceilings, floors, etc.</p>
+<p>- The structure built in this example is the simplest possible: a box with 
+  coordinates 500x500x200.</p>
+<p>- It is necessary to invert these faces' normals so that they are turned to 
+  inside the level, like in the figure below.</p>
+<p><img src="../img/basic01.jpg" width="300" height="204"> <img src="../img/basic02.jpg" width="160" height="181" align="top"></p>
+<p>- The next step is setting the created mesh as <i>structural</i>. Fly3D uses 
+  a <i>prefix tag system</i> for recognizing the various types of meshes and faces. 
+  To set the mesh's faces as <i>structural faces</i>, just rename it, placing 
+  a "*" (asterisk) character before its name. For example, a mesh named "structure" 
+  must be renamed to &quot;*structure". </p>
+<h3>Adding detail objects</h3>
+<p>- In this step, triangular and polygonal detail objects will be created.</p>
+<p>- <i>Detail objects</i> follow the same <i>prefix tag</i> pattern. Therefore, 
+  a "^" must be added to the beginning of the object's name, if the object is 
+  made of triangular faces, or a "&amp;", if the object is made of faces with 
+  more than three vertices.</p>
+<h3></h3>
+<p>- Boxes will be created and renamed with a &quot;&amp;&quot; tag prefix, informing 
+  that they should be exported as polygonal objects. Their sizes are 70x60x40.</p>
+<p>- Another object will also be created, but this time a Teapot will be used. 
+  It must be renamed with the addition of a &quot;^&quot; (circumflex) tag prefix, 
+  indicating that it is a triangular object.</p>
+<p><img src="../img/basic03.jpg" width="300" height="203"></p>
+<h3>Adding lights</h3>
+<p>- In this step, lights will be added to the scene. Lights must always be of 
+  the <i>Omni</i> type, and their color and illumination radius must be defined 
+  in the <i>far attenuation</i> submenu. Lights do not need a <i>prefix tag</i> 
+  before their names.</p>
+<p>- 5 lights will be created, 4 of them with different colors on each corner 
+  of the room, and a white one on the center for ambient.</p>
+<p><img src="../img/basic04.jpg" width="300" height="202"></p>
+<h3>Adding a curve</h3>
+<p>- The <i>flyCurve</i> plugin can be found in the Create/Geometry/Paralelo menu.</p>
+<p>- A <i>flyCurve</i> object will be added to the scene. A <i>full cylinder</i> 
+  should be selected, created and positioned in the room with coordinates 30x30x100.</p>
+<p><img src="../img/basic05.jpg" width="300" height="202">
+	<b><img src="../img/basic06.jpg" width="160" height="146" align="top"></b></p>
+<h3>Adding Entities</h3>
+<p>- The last step in building the level is inserting <i>entities</i> in it. <i>Entites</i> 
+  can be power-ups, birthpads, portals, mirrors, etc. In this tutorial example, 
+  a birthpad and a power-up entities were added to the scene. The entities names 
+  must match the names of classes that exist in a Fly3D plugin, and they are represented 
+  by simple meshes, like boxes. The image below shows the birthpad and power-up 
+  entities (highlighted in red):</p>
+<p>- Entities must have a "$" <i>prefix tag</i> before their names.</p>
+<p>- A <i>birthpad</i> (an entity that marks a place in the level for the player 
+  to appear on start-up) will be added to the scene. A sphere will be created 
+  and renamed to <i>$birthpad</i>.</p>
+<p><img src="../img/basic07.jpg" width="300" height="202"></p>
+<h3>Exporting the level</h3>
+<p>- In this step, it is mandatory that the export plugins have been installed 
+  through the Fly3D Plugins Installation Program (<b>flyInstPlugins.exe</b>). 
+  Refer to the Programming Tutorial, Step 2 for information on how to use <b>flyInstPlugins.exe</b>.</p>
+<p>- In the 3D Studio MAX menu, select File/Export. Then choose "Fly3D 2.0 Map 
+  (*.fmp)" from the file type list. The file must be saved in the 'data' folder 
+  inside the Fly3D installation directory.</p>
+<h3>Building the level</h3>
+<p>- Now that the map file (.fmp) is saved, the scene must be built for Fly3D 
+  frontends to be able to open and run it. In the 'util' folder inside the Fly3D 
+  installation directory, the <b>flyBuilder.exe</b> application must be run.</p>
+<p>- The previously exported .fmp file must be selected. The build options can 
+  be changed, but for this example the default settings will do. A <i>class template</i> 
+  must also be chosen, and for this tutorial the <b>fly_observer</b> template 
+  will be used.</p>
+<p>- The building options used in this example are shown below with the final 
+  level running in the engine:</p>
+<table width="100%">
+  <tr>
+    <td>
+      <p align="center">Build BSP<br>
+        Build Lightmaps<br>
+        Build FLY file <br>
+        Class Template: fly_observer</p>
+      <p align="center"><i>Options:</i><br>
+        Backface Culling<br>
+        Light x Normal Dot product<br>
+        Shadows / Soft Shadows<br>
+        Light Samples : 4<br>
+        Light Jittering : 4.0000<br>
+        Ambient Light: 16 (Default)<br>
+        Light Map size: 64<br>
+        Light Map pixel size: 32.0000<br>
+        BSP Grid size: 50000.0000<br>
+        PVS Grid size: 50000.0000</p>
+</td>
+    <td> 
+      <div align="center"><img src="../img/simplemodelling.jpg" width="256" height="192"></div>
+    </td>
+  </tr>
+</table>
+<p><br>
+</p>
+<p>- After clicking on the <i>Build</i> button and waiting a little while, the 
+  scene will be ready for use in Fly3D.</p>
+</body></html>

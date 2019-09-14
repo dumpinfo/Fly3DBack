@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>Target, aim, fire! Shooting with 'gun', 'gun_projectile' and its derived classes</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>Target, aim, fire! Shooting with 'gun', 'gun_projectile' and its derived classes</h1>
+<p>Fly3D provides a weapons standard plugin, <b>weapon.dll</b>, which consists 
+  of classes that implement guns and different types of projectiles. A new plugin 
+  or applcation might implement a class representing some kind of weapon-carrying 
+  entity, like a person or a war vehicle, and use the <b>weapon.dll</b> classes 
+  to add guns to these entities. It is also possible to create new types of projectiles, 
+  making a new projectile class derived from <b>gun_projectile</b> (a class from 
+  <b>weapon.dll</b>). The types of projectile implemented in the weapons plugin 
+  are <b>laser</b>, <b>missile</b> and <b>mine</b>.</p>
+<p>Using the <b>gun</b> class in a custom plugin or application works as follows: 
+  a pointer to a <b>gun</b> object is added to the definition of the weapon-carrying 
+  entity class. See the example below:</p>
+<p class='code'>#include &quot;c:\fly3d\plugin\weapon\weapon.h&quot;<br>
+  <br>
+  class myclass : public flyBspObject<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;gun *g;<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;myclass();<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;int step(int dt);<br>
+  }</p>
+<p>Whenever the entity intends to fire, it must call the <b>fire_status</b> method 
+  of the gun object and test if the result is positive; a result of 0 means that 
+  the delay of fire has not been reached since the last time the gun was fired; 
+  a negative result means the gun is out of ammo. </p>
+<p>Once the fire status for the gun has been checked, the <b>fire</b> method can 
+  be called. It expects two parameters: the first one is a pointer to the flyBspObject 
+  that is firing the gun (typically, the <b>this</b> pointer of the weapon-carrying 
+  entity); the second is an integer number representing the index of the player 
+  that is firing the gun, used in multiplayer simulations and games (can be -1 
+  for 'no player'). Below is a piece of code showing the firing procedure for 
+  our simple class:</p>
+<p class='code'>int myclass::step(int dt)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;if(g &amp;&amp; g-&gt;fire_status()&gt;0)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;g-&gt;fire(this,-1); <br>
+  }</p>
+<p>Creating a new kind of gun projectile is also simple: a new class must be created, 
+  deriving from the <b>gun_projectile</b> class found in <b>weapon.dll</b>. The 
+  class then must implement the virtual method <b>fire</b>, which returns a pointer 
+  to the activated projectile, and receives the following parameters: a <b>flyVector</b> 
+  object representing the initial position of the projectile; a normalized <b>flyVector</b> 
+  object representing the direction to which the projectile will move; a floating 
+  point value representing the initial velocity intensity of the projectile; an 
+  integer value representing the index of the player that is firing the projectile, 
+  used in multiplayer simulations and games (can be -1 for 'no player'); and a 
+  pointer to a <b>flyBspObject</b> object that represents the entity that is firing. 
+  An example class deriving from <b>gun_projectile</b> is given below:</p>
+<p class='code'>#include &quot;c:\fly3d\plugin\weapon\weapon.h&quot;<br>
+  <br>
+  class myotherclass : public gun_projectile<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;myotherclass();<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;flyBspObject *fire(flyVector&amp; p,flyVector&amp; dir,float 
+  v,int playerid,flyBspObject *o=0);<br>
+  }<br>
+  <br>
+  flyBspObject *myotherclass::fire(flyVector&amp; p,flyVector&amp; dir,float v,int 
+  playerid,flyBspObject *o)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;myotherclass *copy=(myotherclass *)clone();<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;copy-&gt;pos=p;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;copy-&gt;vel=dir*v;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;copy-&gt;align_z(dir);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;copy-&gt;player=playerid;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;copy-&gt;owner=o;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;g_flyengine-&gt;activate(copy);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;return copy;<br>
+  } </p>
+</body>
+</html>

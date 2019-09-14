@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>Programming Tutorial - Step 9</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>9. Adding movement and collision detection to the object class </h1>
+<p>This step exemplifies movement simulation and collision detection for the 'object' 
+  class. The object will move with constant acceleration and bounce at walls, 
+  and its velocity vector will be represented by the variable <font face="Courier" size="-1">vel</font>, 
+  inherited from <b>flyParticle</b> (through <b>flyBspObject</b>). Collision will 
+  be handled by the <font face="Courier" size="-1">box_collision</font> method 
+  inherited from <b>flyBspObject</b>, which implements collision detection and 
+  response for the object's axis-aligned bounding box.</p>
+<p>The code is like this: firstly, the object's position and velocity are updated: 
+  position depends on velocity and time, and velocity depends on force, mass and 
+  time. Then, the <font face="Courier" size="-1">box_collision</font> method is 
+  called, and it handles collision detection and bouncing automatically (bouncing 
+  depends on the object's <font face="Courier" size="-1">bump</font> and <font face="Courier" size="-1">friction</font> 
+  parameters, inherited from <b>flyBspObject</b>), updating the position and velocity 
+  parameters passed to it. Finally, these values must be assigned to the object's 
+  original position and velocity. This is all inserted in the object's <b>step</b> 
+  method, like this:</p>
+<p class="code">int object::step(int dt)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;flyVector p,v;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;p=pos+vel*(float)dt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;v=vel+force*((float)dt/mass);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;box_collision(p,v);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;pos = p;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;vel = v;<br>
+  <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;return 1;<br>
+  } </p>
+</body>
+</html>

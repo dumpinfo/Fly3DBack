@@ -1,0 +1,70 @@
+<html>
+<head>
+<title>Fly3D Guide - Cameras and scene drawing</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000">
+<h1>Cameras and scene drawing </h1>
+<p>Fly3D engine is a real-time rendering tool. It offers various options for rendering 
+  the scene from different angles. During the simulation, it renders the scene 
+  from a determined view point several times per second.</p>
+<p>The point from which the scene will be drawn is defined by the <b>cam</b> engine 
+  variable. Any object derived from <b>flyBspObject</b> can be assigned to this 
+  variable, and the scene will be drawn according to the position of this object, 
+  and to the direction it is facing (which is the negation of the object's local 
+  system's Z axis).</p>
+<p>Here are some methods related to cameras and scene drawing:</p>
+<h3><a name="anchor_set_camera"></a>set_camera</h3>
+<p class="code">void set_camera(flyBspObject *d)</p>
+<p>This method is used to set the engine's current camera. The camera object set 
+  by this method is used in the <b><a href="#anchor_draw_bsp">draw_bsp</a></b> 
+  method. Besides seting the <b>cam</b> variable, the <b>set_camera</b> methos 
+  also instantiates the model view and projection matrices and the viewport vector 
+  for the camera, and creates the corresponding view frustum.</p>
+<h3>draw_frame</h3>
+<p class="code">void draw_frame()</p>
+<p>This is a method for drawing the whole frame. The engine calls it whenever 
+  it is time to render the current simulation frame. <b>draw_frame</b> sends messages 
+  to all loaded plugins, telling them to draw themselves. This method also sends 
+  2D drawing messages to the plugins.</p>
+<h3><a name="anchor_draw_bsp"></a>draw_bsp</h3>
+<p class="code">void draw_bsp()</p>
+<p>This method draws the scene as viewed by the engine's current camera. The camera 
+  must be set using the <b><a href="#anchor_set_camera">set_camera</a></b> method. 
+  The engine then renders the scene from the camera, using PVS and view frustum 
+  culling.</p>
+<h3>draw_frame_pic</h3>
+<p class="code">int draw_frame_pic(flyPicture&amp; p,flyBspObject *camera,float 
+  camangle,float aspect)</p>
+<p>This method implements render-to-picture technology. It renders the scene viewed 
+  from the camera object in the <font face="Courier" size="-1">camera</font> parameter 
+  and stores the resulting image in a <b>flyPicture</b> object. The <font face="Courier" size="-1">camangle</font> 
+  and <font face="Courier" size="-1">aspect</font> parameters can be ommited, 
+  and in this case the value of the engine's variables of the same name will be 
+  used instead.</p>
+<h3>draw_frame_subpic</h3>
+<p class="code">int draw_frame_subpic(flyPicture&amp; p,int x,int y,int sizex,int 
+  sizey,flyBspObject *camera,float camangle,float aspect)</p>
+<p>This method is a modified render-to-picture routine, where just a piece of 
+  the whole image is rendered. The <font face="Courier" size="-1">x</font> and 
+  <font size="-1"> <font face="Courier"> y</font></font> parameters are the position, 
+  and the <font size="-1" face="Courier">sizex</font> and <font size="-1" face="Courier">sizey</font> 
+  parameters are the offset of the render window inside the original image.</p>
+<h3>draw_frame_tex</h3>
+<p class="code">int draw_frame_tex(int tex,flyBspObject *camera,float camangle,float 
+  aspect)</p>
+<p>This method is similar to the <b>draw_frame_pic</b> function, but it implements 
+  render-to-texture instead. The rendered image is stored over a texture in the 
+  engine's texture cache. The texture over which the image will be saved is given 
+  by the index parameter <font face="Courier" size="-1">tex</font>. Rendering 
+  to textures is much faster than rendering to pictures, for in the first all 
+  operations are performed by the video card itself.</p>
+<h3>draw_frame_subtex</h3>
+<p class="code">int draw_frame_subtex(int tex,int x,int y,int sizex,int sizey,flyBspObject 
+  *camera,float camangle,float aspect)</p>
+<p>This method is similar to the <b>draw_frame_subpic</b> function, but it implements 
+  render-to-texture instead.</p>
+</body>
+</html>

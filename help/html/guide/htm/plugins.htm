@@ -1,0 +1,95 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Fly3D Guide - Plugins</TITLE>
+<META NAME="Template" CONTENT="D:\ARQUIVOS DE PROGRAMAS\MICROSOFT\OFFICE\html.dot">
+<link rel="stylesheet" href="../../fly-refes.css" type="text/css">
+</HEAD>
+<BODY TEXT="#000000" LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff">
+
+<H1>Plugins</H1>
+<P><IMG SRC="../img/plugins.gif" WIDTH=522 HEIGHT=130></P>
+<P><BR>
+  The Fly3D engine and SDK is fully plugin-oriented. Any extension of its functionality, 
+  being it a utility, a new frontend or an entire new game or application, can 
+  be implemented as an independent plugin, in the form of a DLL. This way, we 
+  do not need to re-compile the engine or any other piece of code that does not 
+  belong to our plugin.</P>
+<P>A Fly3D plugin can be of three types: an <B>object repository plugin</B>, a 
+  <B>processing plugin</B> or a <B>compound plugin</B>. An <B>object repository 
+  plugin</B> enumerates any number of <B>flyBspObject</B>-derived classes, each 
+  of them implementing the <B>flyBspObject</B> <A HREF="virtualf.htm">virtual 
+  functions</A> and exporting any number of parameters of predefined types. A 
+  <B>processing plugin</B> does not define any classes; instead, it implements 
+  its funcionality through the <B>fly_message</B> DLL-exported method, which the 
+  engine calls whenever it wants the plugins to run (for example, upon initialisation 
+  or closing of the scene, and to update and draw the state of the application 
+  on every frame). A <B>compound plugin</B> merges the two types described above 
+  into a single DLL. We can build an entire game in a single plugin, but it is 
+  advisable to divide it into different modules to reuse the code and facilitate 
+  maintenance and bug-catching.</P>
+<P>Every Fly3D plugin must implement and export some functions to be used by the engine. One of them has already been mentioned: </P>
+<BLOCKQUOTE>The <B>get_version</B> function must return the version of Fly3D that the plugin belongs to and is optional (not including it will disable the plugin version check done by the engine and might crash when loading old plugins in newer enegine releases). Here is its implementation:</BLOCKQUOTE>
+<BLOCKQUOTE class="code">__declspec( dllexport )<BR>
+  int get_version()<BR>
+  { return FLY_VERSION_NUM; } </BLOCKQUOTE>
+<BLOCKQUOTE>The <B>num_classes</B> function must return the number of flyBspObject-derived classes implemented in the plugin. The following is an example for a plugin implementing a single class:</BLOCKQUOTE>
+<BLOCKQUOTE class="code">__declspec( dllexport )<BR>
+  int num_classes()<BR>
+  { return 1; } </BLOCKQUOTE>
+<BLOCKQUOTE>The <B>get_class_desc</B> function must return a pointer to a <B>flyClassDesc</B> derived object containing a description for each class implemented in the plugin. Here is an example for a simple object called <I>myobject</I>:</BLOCKQUOTE>
+<BLOCKQUOTE class="code">myobject_desc cd_myobject; <BR>
+  <BR>
+  __declspec( dllexport )<BR>
+  flyClassDesc *get_class_desc(int i) <BR>
+  { <BR>
+  &nbsp;&nbsp;switch(i)<BR>
+  &nbsp;&nbsp;{ <BR>
+  &nbsp; case 0: return &amp;cd_myobject; <BR>
+  &nbsp;&nbsp;default: return 0; <BR>
+  &nbsp;&nbsp;}<BR>
+  } </BLOCKQUOTE>
+<BLOCKQUOTE>The <B>fly_message</B> function is called by the engine during the simulation to notify the plugin of the initialisation of the scene, closing of the scene and also inform the plugins every frame to update it's state, draw itself in 3D and then in 2D. Follows a draft of the implementation with the predefined messages (custom plugins can define new message types):</BLOCKQUOTE>
+<BLOCKQUOTE class="code">__declspec( dllexport )<BR>
+  int fly_message(int msg,int param,void *data)<BR>
+  {<BR>
+  &nbsp;&nbsp;switch(msg)<BR>
+  &nbsp;&nbsp;{<BR>
+  &nbsp;&nbsp;case FLY_MESSAGE_INITSCENE:<BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;...<BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;break;<BR>
+  &nbsp;&nbsp;case FLY_MESSAGE_UPDATESCENE:<BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;...<BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;break;<BR>
+  &nbsp;&nbsp;case FLY_MESSAGE_DRAWSCENE:<BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;...<BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;break;<BR>
+  &nbsp;&nbsp;case FLY_MESSAGE_DRAWTEXT:<BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;...<BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;break;<BR>
+  &nbsp;&nbsp;case FLY_MESSAGE_CLOSESCENE:<BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;...<BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;break;<BR>
+  &nbsp;&nbsp;}<BR>
+  return 1;<BR>
+  }</BLOCKQUOTE>
+<BLOCKQUOTE>The <B>get_global_param_desc</B> function must enumerate all global parameters in the plugin, filling a <B>flyParamDesc</B> object for each of them, all inside a <FONT FACE="Courier,Courier New" SIZE=2>switch</FONT> block, and return the total number of global parameters (a plugin global parameter is one that is shared by all the classes in the plugin). Here is an example of a single global parameter called <I>myint</I> of type integer ('i' parameter type):</BLOCKQUOTE>
+<BLOCKQUOTE class="code">int myint=0;<BR>
+  <BR>
+  __declspec( dllexport )<BR>
+  int get_global_param_desc(int i,flyParamDesc *pd)<BR>
+  {<BR>
+  &nbsp;&nbsp;if (pd!=0)<BR>
+  &nbsp;&nbsp;switch(i)<BR>
+  &nbsp;&nbsp;{<BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;case 0:<BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;type='i';<BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;data=&amp;myint;<BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pd-&gt;name="myint_name";<BR>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;break;<BR>
+  &nbsp;&nbsp;}<BR>
+  &nbsp;&nbsp;return 1;<BR>
+  }</BLOCKQUOTE>
+</BODY>
+</HTML>
